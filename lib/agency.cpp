@@ -53,7 +53,7 @@ Flight getLine(char* line)
     return flight;
 }
 
-void resume(vector<Flight> vuelos, int num_vuelos,bool show_table=false)
+void resume(vector<Flight> vuelos, int num_vuelos,bool show_table)
 {
 	int i=0;
 	int count_airports = 0;

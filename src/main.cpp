@@ -1,6 +1,7 @@
 #include <vector>
 #include <cstdio>
 #include <iostream>
+#include <string>
 using namespace std;
 
 #include "../lib/individual.hpp"
@@ -11,6 +12,12 @@ vector<Flight> flights;
 
 int main(int argc, char const *argv[])
 {
+     cout << *(++argv) <<endl;
+     if(*argv!=NULL){
+          cout << *(argv) <<endl;
+          AGENCY_H::getFlights(*argv);
+     }
+     exit(1);
      Flight vuelo(1,"cppo","stgo","10:10","11:20");
      printf("vuelo -> %d ,%s\n", vuelo.id,vuelo.aeropuerto_init.c_str());
      //cout << vuelo.aeropuerto_init << endl;

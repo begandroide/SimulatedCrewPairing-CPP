@@ -1,0 +1,23 @@
+CC=g++
+OUT=out
+SRC=src
+CFLAGS=-g
+LIB=lib
+
+all: individual.o flight.o main.o fly
+
+fly:
+	g++ -o $(OUT)/fly $(OUT)/main.o $(OUT)/individual.o $(OUT)/flight.o
+
+main.o:
+	g++ -c $(SRC)/main.cpp -o $(OUT)/main.o
+
+individual.o:
+	g++ -c $(LIB)/individual.cpp -o $(OUT)/individual.o
+
+flight.o:
+	g++ -c $(LIB)/flight.cpp -o $(OUT)/flight.o
+
+clean:
+	rm -f $(OUT)/*.o
+	rm -f $()

@@ -12,11 +12,17 @@ vector<Flight> flights;
 
 int main(int argc, char const *argv[])
 {
-     cout << *(++argv) <<endl;
-     if(*argv!=NULL){
-          cout << *(argv) <<endl;
-          AGENCY_H::getFlights(*argv);
+     vector<Flight> flights;
+     //cout << *(++argv) <<endl;
+     if(*++argv!=NULL){
+          //cout << *(argv) <<endl;
+          AGENCY_H::getFlights(*argv, &flights);
+     }else{
+          cout << "Error: not input airport file, insert one <instance.*>" <<endl;
+          cout << "error(1)" <<endl;
+          exit(0);
      }
+     AGENCY_H::resume(flights,flights.size());
      exit(1);
      Flight vuelo(1,"cppo","stgo","10:10","11:20");
      printf("vuelo -> %d ,%s\n", vuelo.id,vuelo.aeropuerto_init.c_str());

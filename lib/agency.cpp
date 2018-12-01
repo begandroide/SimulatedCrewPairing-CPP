@@ -1,7 +1,4 @@
 #include <string.h>
-#include <assert.h>
-#include <stdlib.h>
-#include <cstdio>
 #include<iostream>
 #include<sstream>
 #include <vector>
@@ -18,12 +15,13 @@ int cuenta_lineas(char const * file){
 	   {
 		  count++;
 	   }
-    }
-    fclose(stream);
-    return count;
+    	}
+	fclose(stream);
+    	return count;
 }
+
 char* getString(char *line, int after_comas){
-    char* string_id_vuelo = new char();//malloc(sizeof(char)*3);
+    char* string_id_vuelo = new char();
     int comas_pasadas = 0;
     while(*line != '\r'){
 	   if(*line != ',' && comas_pasadas == after_comas){
@@ -53,6 +51,24 @@ Flight getLine(char* line)
     return flight;
 }
 
+/*
+ * main function of this module.
+ * bgautier produce
+ */
+void getFlights(char const *argv, vector<Flight>* pointer){
+	int num_vuelos = cuenta_lineas(argv);
+	FILE* stream = fopen(argv, "r");
+	char line[1024];
+    fgets(line, 1024, stream); //nos saltamos la primera linea
+    while (fgets(line, 1024, stream))
+    {
+	   char* tmp = strdup(line);
+	   (*pointer).push_back( getLine(tmp));
+	   free(tmp);
+    }
+    printf("Vuelos satisfactoriamente cargados!\n");
+    fclose(stream);     
+}
 void resume(vector<Flight> vuelos, int num_vuelos,bool show_table)
 {
 	int i=0;
@@ -78,7 +94,7 @@ void resume(vector<Flight> vuelos, int num_vuelos,bool show_table)
 	    {
 			*airports = new char[1];
 			*airports = strcpy(*airports,vuelos.at(i).aeropuerto_init.c_str());
-	//	  	printf("una nueva -> %s\n",vuelos.at(i).aeropuerto_init.c_str());
+			////printf("una nueva -> %s\n",vuelos.at(i).aeropuerto_init.c_str());
 			if(i==0)
 			{
 				*fingerPrint = &**airports;
@@ -107,7 +123,7 @@ void resume(vector<Flight> vuelos, int num_vuelos,bool show_table)
 				*airports = new char[3];
 				*airports = strcpy(*airports,vuelos.at(i).aeropuerto_init.c_str());
 				count_airports++;
-	//			cout <<((string)"una nueva! ->").append(vuelos.at(i).aeropuerto_init)<<endl;
+				////cout <<((string)"una nueva! ->").append(vuelos.at(i).aeropuerto_init)<<endl;
 		}
 	   }
 	++i;
@@ -119,26 +135,4 @@ void resume(vector<Flight> vuelos, int num_vuelos,bool show_table)
 	    cout<<*airports++<<endl;
 	    z++;
     }
-}
-
-/*
- * main function of this module.
- * bgautier produce
- */
-void getFlights(char const *argv, vector<Flight>* pointer){
-	int num_vuelos = cuenta_lineas(argv);
-	//vector<Flight> flights;
-    FILE* stream = fopen(argv, "r");
-    char line[1024];
-    fgets(line, 1024, stream); //nos saltamos la primera linea
-    int cant_vuelos = 0;
-    while (fgets(line, 1024, stream))
-    {
-	   char* tmp = strdup(line);
-	   (*pointer).push_back( getLine(tmp));
-	   cant_vuelos++;
-	   free(tmp);
-    }
-    printf("Vuelos satisfactoriamente cargados!\n");
-    fclose(stream);     
 }

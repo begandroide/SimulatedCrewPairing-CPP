@@ -22,8 +22,9 @@ int main(int argc, char const *argv[])
           cout << "error(1)" <<endl;
           exit(0);
      }
+     //data in vector flights!
 
-     AGENCY_H::resume(flights,flights.size()); //to show resume about flights
+     AGENCY_H::resume(flights,flights.size(),true); //to show resume about flights
      //test();
      return 0;
 }

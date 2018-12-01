@@ -5,8 +5,7 @@
 #include "flight.hpp"
 using namespace std;
 
-int cuenta_lineas(char const * file){
-    FILE* stream = fopen(file, "r");
+int cuenta_lineas(FILE* stream){
     int count = 0;
     char line[1024];
     if(stream){
@@ -16,8 +15,8 @@ int cuenta_lineas(char const * file){
 		  count++;
 	   }
     	}
-	fclose(stream);
-    	return count;
+	fseek(stream, 0, SEEK_SET);
+	return count;
 }
 
 char* getString(char *line, int after_comas){
@@ -56,8 +55,8 @@ Flight getLine(char* line)
  * bgautier produce
  */
 void getFlights(char const *argv, vector<Flight>* pointer){
-	int num_vuelos = cuenta_lineas(argv);
 	FILE* stream = fopen(argv, "r");
+	int num_vuelos = cuenta_lineas(stream);
 	char line[1024];
     fgets(line, 1024, stream); //nos saltamos la primera linea
     while (fgets(line, 1024, stream))

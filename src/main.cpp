@@ -8,7 +8,7 @@ using namespace std;
 #include "../lib/flight.hpp"
 #include "../lib/agency.hpp"
 
-static vector<Flight> flights; //vector to save flights, pushed in order by id;
+static Agency agency; //vector to save flights, pushed in order by id;
 void test();
 
 int main(int argc, char const *argv[])
@@ -16,15 +16,15 @@ int main(int argc, char const *argv[])
      
      //procedure to load flights into vector flights
      if(*++argv!=NULL){
-          AGENCY_H::getFlights(*argv, &flights);
+          agency.loadFlights(*argv);
      }else{
           cout << "Error: not input airport file, insert one <instance.*>" <<endl;
           cout << "error(1)" <<endl;
           exit(0);
      }
-     //data in vector flights!
-
-     AGENCY_H::resume(flights,flights.size(),true); //to show resume about flights
+     //data loaded in vector flights
+     //agency.resume(); //to show all table flights
+     //agency.showAirports();
      //test();
      return 0;
 }

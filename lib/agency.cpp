@@ -3,9 +3,11 @@
 #include<sstream>
 #include <vector>
 #include "flight.hpp"
+#include "agency.hpp"
+#include <algorithm>
 using namespace std;
 
-int cuenta_lineas(FILE* stream){
+int Agency::cuenta_lineas(FILE* stream){
     int count = 0;
     char line[1024];
     if(stream){
@@ -19,7 +21,7 @@ int cuenta_lineas(FILE* stream){
 	return count;
 }
 
-char* getString(char *line, int after_comas){
+char* Agency::getString(char *line, int after_comas){
     char* string_id_vuelo = new char();
     int comas_pasadas = 0;
     while(*line != '\r'){
@@ -35,7 +37,7 @@ char* getString(char *line, int after_comas){
     return  string_id_vuelo;
 }
 
-Flight getLine(char* line)
+Flight Agency::getLine(char* line)
 {
     char* string_id_vuelo = getString(line,0); //cero comas delante
     char* string_ciudad_salida = getString(line,1);
@@ -43,7 +45,6 @@ Flight getLine(char* line)
     char* hora_salida = getString(line,3);
     char* hora_llegada = getString(line,4);
 
-    char *ptr;
     int ret;
     ret = std::atoi(string_id_vuelo);
 	Flight flight = Flight(ret,string_ciudad_salida,string_ciudad_llegada,hora_salida,hora_llegada);
@@ -54,84 +55,54 @@ Flight getLine(char* line)
  * main function of this module.
  * bgautier produce
  */
-void getFlights(char const *argv, vector<Flight>* pointer){
+void Agency::loadFlights(char const *argv){
 	FILE* stream = fopen(argv, "r");
 	int num_vuelos = cuenta_lineas(stream);
 	char line[1024];
     fgets(line, 1024, stream); //nos saltamos la primera linea
     while (fgets(line, 1024, stream))
     {
-	   char* tmp = strdup(line);
-	   (*pointer).push_back( getLine(tmp));
-	   free(tmp);
+		char* tmp = strdup(line);
+	   	flights.push_back( getLine(tmp));
+		if(!(std::find(airports.begin(), airports.end(), flights.at(flights.size()-1).aeropuerto_init) != airports.end()))
+		 {
+			/* airports contains x */
+			airports.push_back(flights.at(flights.size()-1).aeropuerto_init);
+		}
+	   	free(tmp);
     }
     printf("Vuelos satisfactoriamente cargados!\n");
     fclose(stream);     
 }
-void resume(vector<Flight> vuelos, int num_vuelos,bool show_table)
+
+void Agency::resume()
 {
 	int i=0;
-	int count_airports = 0;
-	char** airports = new char*[num_vuelos];
-	char** fingerPrint = new char*[num_vuelos];
+	cout << "|  id  | origen | llegada | hr_inicio | hr_fin |" << endl;
+    	while(i<flights.size()){
+		//if want show enterely table
+	    	ostringstream os;
+		os << "|  " << to_string(flights.at(i).id) << "   |  " << flights.at(i).aeropuerto_init << "  |     " << flights.at(i).aeropuerto_fin << " |   " << flights.at(i).horaInicio << " |    " << flights.at(i).aeropuerto_fin;
+		cout << os.str() << endl;
+		os.clear();         
+		++i;
+    	}
+}
 
-	if(show_table) cout << "|  id  | origen | llegada | hr_inicio | hr_fin |" << endl;
-    while(i<num_vuelos){
-	    //if want show enterely table
-	    if(show_table)
-	    {
-			ostringstream os;
-			os << "|  " << to_string(vuelos.at(i).id) << "   |  " << vuelos.at(i).aeropuerto_init << "  |     " << vuelos.at(i).aeropuerto_fin << " |   " << vuelos.at(i).horaInicio << " |    " << vuelos.at(i).aeropuerto_fin;
-			cout << os.str() << endl;
-			os.clear();         
-	    }
-	    /*to return begining of array of *char*/
-	    if(i>0){
-		  airports = &*fingerPrint;
-	    }
-	    if(count_airports == 0)
-	    {
-			*airports = new char[1];
-			*airports = strcpy(*airports,vuelos.at(i).aeropuerto_init.c_str());
-			////printf("una nueva -> %s\n",vuelos.at(i).aeropuerto_init.c_str());
-			if(i==0)
-			{
-				*fingerPrint = &**airports;
-			}
-		  	count_airports++;
-	    }else{
-			int j = 0;
-		  	int flag = 0;
-		  	while(j<count_airports){
-				if(vuelos.at(i).aeropuerto_init.compare(*airports) == 0)
-				{
-					//son iguales
-					flag = 1;
-					break;
-				}else{
-					flag = 0;
-					if(!(     (j+1)==count_airports    ))
-					{
-					++airports;
-					}
-				}
-				j++;
-			}
-		  	if(flag==0){
-				++airports;
-				*airports = new char[3];
-				*airports = strcpy(*airports,vuelos.at(i).aeropuerto_init.c_str());
-				count_airports++;
-				////cout <<((string)"una nueva! ->").append(vuelos.at(i).aeropuerto_init)<<endl;
-		}
-	   }
-	++i;
-    }
-    //show airports;
-    int z = 0;
-    airports -= (count_airports-1);
-    while(z<(count_airports)){
-	    cout<<*airports++<<endl;
-	    z++;
-    }
+vector<Flight> Agency::getFlights(){
+	return flights;
+}
+
+vector<string> Agency::getAirports(){
+	return airports;
+}
+
+void Agency::showAirports(){
+	for ( int i = 0; i<airports.size();i++){
+		printf("aeropuerto -> %s\n",airports.at(i).c_str());
+	}
+}
+
+vector<string> Agency::getBases(){
+	return bases;
 }

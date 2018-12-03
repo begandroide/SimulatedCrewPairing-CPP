@@ -7,7 +7,7 @@ LIB=lib
 all: individual.o flight.o agency.o nature.o main.o fly
 
 fly:
-	g++ -o $(OUT)/fly $(OUT)/main.o $(OUT)/individual.o $(OUT)/flight.o $(OUT)/agency.o $(OUT)/nature.o 
+	g++ -o $(OUT)/fly $(OUT)/individual.o $(OUT)/flight.o $(OUT)/agency.o  $(OUT)/nature.o $(OUT)/main.o 
 
 main.o:
 	g++ -c $(SRC)/main.cpp -o $(OUT)/main.o

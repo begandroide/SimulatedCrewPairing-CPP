@@ -23,10 +23,10 @@ public:
     Individual(int , float , float , std::vector<int>); 
     
     /*---------------------------------Operators---------------------------------*/
-    static Individual* getGreedyIndividual(int);
+    //static Individual* getGreedyIndividual(int); made by nature
     static Individual* getCopy(Individual*);
     static void calculatePrice();
-    static void calculateFitness();
+    //static void calculateFitness(); made by nature
     static void calculateSize();
     
 

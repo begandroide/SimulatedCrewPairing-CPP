@@ -31,7 +31,8 @@ int main(int argc, char const *argv[])
           cout << "error(1)" <<endl;
           exit(0);
      }
-
+  
+     nature.makePopulation(0); //0 is generation number zero
      /*data loaded in vector flights*/
 
      //nature.agency.resume(); //to show all table flights
@@ -41,8 +42,8 @@ int main(int argc, char const *argv[])
 }
 
 void test(){
-     Flight vuelo(1,"cppo","stgo","10:10","11:20");
-     printf("vuelo -> %d ,%s\n", vuelo.id,vuelo.aeropuerto_init.c_str());
+    //Flight vuelo(1,"cppo","stgo","10:10","11:20");
+    // printf("vuelo -> %d ,%s\n", vuelo.id,vuelo.aeropuerto_init.c_str());
      //cout << vuelo.aeropuerto_init << endl;
      vector<Individual*> population;
      Individual ind1(5, (vector<int>){2,3,4,5,6});

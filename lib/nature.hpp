@@ -22,7 +22,7 @@ public:
      * param: to know number of iterations; idea of generate a solution with
      * different begin flight
      */
-     static Individual getGreedyIndividual(int);
+     Individual getGreedyIndividual(int);
      
      /*
      * Function depends of hours of flights, hours of no flights (idle time),

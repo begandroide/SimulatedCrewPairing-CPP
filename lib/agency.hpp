@@ -1,5 +1,9 @@
 #ifndef AGENCY_H
 #define AGENCY_H
+#include <vector>
+#include <string>
+#include "flight.hpp"
+
 using namespace std;
 
 class Agency{

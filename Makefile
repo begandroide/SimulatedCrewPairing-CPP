@@ -4,10 +4,10 @@ SRC=src
 CFLAGS=-g
 LIB=lib
 
-all: individual.o flight.o agency.o main.o fly
+all: individual.o flight.o agency.o nature.o main.o fly
 
 fly:
-	g++ -o $(OUT)/fly $(OUT)/main.o $(OUT)/individual.o $(OUT)/flight.o $(OUT)/agency.o 
+	g++ -o $(OUT)/fly $(OUT)/main.o $(OUT)/individual.o $(OUT)/flight.o $(OUT)/agency.o $(OUT)/nature.o 
 
 main.o:
 	g++ -c $(SRC)/main.cpp -o $(OUT)/main.o
@@ -20,6 +20,9 @@ flight.o:
 
 agency.o:
 	g++ -c $(LIB)/agency.cpp -o $(OUT)/agency.o
+
+nature.o:
+	g++ -c $(LIB)/nature.cpp -o $(OUT)/nature.o
 
 clean:
 	rm -f $(OUT)/*.o

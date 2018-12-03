@@ -7,24 +7,35 @@ using namespace std;
 #include "../lib/individual.hpp"
 #include "../lib/flight.hpp"
 #include "../lib/agency.hpp"
+#include "../lib/nature.hpp"
 
 static Agency agency; //vector to save flights, pushed in order by id;
+static Nature nature;
 void test();
+long number_individuals;
 
 int main(int argc, char const *argv[])
-{
-     
+{     
      //procedure to load flights into vector flights
      if(*++argv!=NULL){
-          agency.loadFlights(*argv);
+          //agency.loadFlights(*argv);
+          nature.agency.loadFlights(*argv);
+          if(*++argv!=NULL){
+               number_individuals = strtol(*argv,(char**)argv,10);
+               cout<<"number of individuals per generation: "+to_string(number_individuals)<<endl;
+          }else{
+               printf("Number of Individual per generation not given, set default: 23\n");
+          }
      }else{
           cout << "Error: not input airport file, insert one <instance.*>" <<endl;
           cout << "error(1)" <<endl;
           exit(0);
      }
-     //data loaded in vector flights
-     //agency.resume(); //to show all table flights
-     //agency.showAirports();
+
+     /*data loaded in vector flights*/
+
+     //nature.agency.resume(); //to show all table flights
+     //nature.agency.showAirports();
      //test();
      return 0;
 }

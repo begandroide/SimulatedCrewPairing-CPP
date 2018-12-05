@@ -205,6 +205,12 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
      for(int z = 0; z < chromosomes.size();z++){
           time += agency.getFlights().at(chromosomes.at(z)-1).timeFlight;
      }
+
+     if(time > MAX_TIME_FLIGHT){
+          chromosomes.clear();
+          return Individual(size, chromosomes);
+     }
+
      
      // calculate price to this duty (OK)
      price = agency.getFlights().at(chromosomes.at(0)).timeFlight;
@@ -226,6 +232,9 @@ void Nature::makePopulation(int numGeneration, int numIndividuals){
      vector<Individual>* individues = new vector<Individual>;
      int discover = 1;
      for(int i = 0;i<agency.getFlights().size()-1;i++){
+          if(individues->size() == numIndividuals){
+               break;
+          }
           //cout<<"-----individual number -> "+to_string(i+1)<<endl;
      /*     
           if(discover+5>agency.getFlights().size()){

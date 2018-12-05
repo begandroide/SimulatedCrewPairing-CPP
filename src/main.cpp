@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
           exit(0);
      }
   
-     nature.makePopulation(0,12); //0 is generation number zero
+     nature.makePopulation(0,23); //0 is generation number zero
      nature.showGeneration(0); //show generation number 0
 
      

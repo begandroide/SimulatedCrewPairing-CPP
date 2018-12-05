@@ -149,7 +149,7 @@ bool Nature::validFlight(vector<int> chromosomes, int position){
 }
 
 Individual Nature::getGreedyIndividual(int id_flight_start){
-     int size;
+     double size;
      float price, fitness;
      vector<int> chromosomes;
      //push chromosome parameter to vector chromosomes
@@ -185,14 +185,28 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
                }
           }
      }
-     size = chromosomes.size();
+     
+     //calculateSize (OK)
+     size = agency.getFlights().at(chromosomes.at(0)).timeFlight;
+     for(int z = 0; z < chromosomes.size();z++){
+          if(z>0){
+               size += agency.getFlights().at(chromosomes.at(z)-1).timeFlight;
+               size += getIdleTime(agency.getFlights().at(chromosomes.at(z-1)-1).horaFin,agency.getFlights().at(chromosomes.at(z)-1).horaInicio);
+          }
+     }
+     if(size > MAX_TIME_DUTY){
+          chromosomes.clear();
+          return Individual(size, chromosomes);
+     }
+
+    // cout<<"size total -> "<<size<<endl;
      // calculate time (OK) 
      double time = 0.0;
      for(int z = 0; z < chromosomes.size();z++){
           time += agency.getFlights().at(chromosomes.at(z)-1).timeFlight;
      }
      
-     // calculate price to this duty
+     // calculate price to this duty (OK)
      price = agency.getFlights().at(chromosomes.at(0)).timeFlight;
      for(int z = 0; z < chromosomes.size();z++){
           if(z>0){
@@ -211,13 +225,20 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
 void Nature::makePopulation(int numGeneration, int numIndividuals){
      vector<Individual>* individues = new vector<Individual>;
      int discover = 1;
-     for(int i = 0;i<numIndividuals;i++){
+     for(int i = 0;i<agency.getFlights().size()-1;i++){
           //cout<<"-----individual number -> "+to_string(i+1)<<endl;
-          if(discover+10>agency.getFlights().size()){
-               discover = (discover/(3*i))+1;
+     /*     
+          if(discover+5>agency.getFlights().size()){
+               discover = (discover/(3*i))+2;
           }
           individues->push_back(getGreedyIndividual(discover));
           discover = 3*discover;
+     */
+          //cout<<"voy por "<<to_string(i+1)<<endl;
+          Individual indi = getGreedyIndividual(i+1);
+          if(indi.getChromosomes().size() > 0){
+               individues->push_back(indi);
+          }
      }
      population.push_back(*individues);
 };
@@ -230,7 +251,7 @@ void Nature::showGeneration(int number_gen){
      cout<<"o---------------------------------------------------------------------o"<<endl;
      for(int z = 0; z < population.at(number_gen).size();z++){
           cout<<"<~~~~~~~~~~~~~~~~~~~~~~~~individual number "<<to_string(z+1)<<" ~~~~~~~~~~~~~~~~~~~~~~~~~>"<<endl;
-          for(int x = 0; x < population.at(number_gen).at(z).getSize();x++){
+          for(int x = 0; x < population.at(number_gen).at(z).getChromosomes().size();x++){
                cout<<population.at(number_gen).at(z).getChromosomes().at(x)<<endl;
           }
           cout<<" - - > TIME: in hours  :  "<<population.at(number_gen).at(z).getTime()<<endl;

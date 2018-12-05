@@ -1,0 +1,164 @@
+g++ -O3 -o out/fly out/individual.o out/flight.o out/agency.o  out/nature.o out/main.o 
+/usr/bin/time out/fly instances/instancia.csv
+Vuelos satisfactoriamente cargados!
+Number of Individual per generation not given, set default: 23
+o---------------------------------------------------------------------o
+o---------------------------------------------------------------------o
+o--------------------Showing Generation Number 0 ---------------------o
+o---------------------------------------------------------------------o
+o---------------------------------------------------------------------o
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 1 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+5
+37
+27
+ - - > TIME: in hours  :  3.33333
+ - - > PRICE: in dolars $ 4.25
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 2 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+8
+11
+14
+18
+28
+ - - > TIME: in hours  :  6.16667
+ - - > PRICE: in dolars $ 8.875
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 3 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+11
+14
+18
+28
+ - - > TIME: in hours  :  4.75
+ - - > PRICE: in dolars $ 6.875
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 4 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+14
+18
+28
+ - - > TIME: in hours  :  3.5
+ - - > PRICE: in dolars $ 4.9375
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 5 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+15
+19
+14
+18
+28
+ - - > TIME: in hours  :  5.5
+ - - > PRICE: in dolars $ 10.1875
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 6 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+16
+20
+30
+5
+37
+27
+ - - > TIME: in hours  :  6.66667
+ - - > PRICE: in dolars $ 10.1667
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 7 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+17
+30
+5
+37
+27
+ - - > TIME: in hours  :  5.66667
+ - - > PRICE: in dolars $ 10.1667
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 8 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+18
+28
+ - - > TIME: in hours  :  2.25
+ - - > PRICE: in dolars $ 2.9375
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 9 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+19
+14
+18
+28
+ - - > TIME: in hours  :  4.5
+ - - > PRICE: in dolars $ 8.4375
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 10 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+20
+30
+5
+37
+27
+ - - > TIME: in hours  :  5.66667
+ - - > PRICE: in dolars $ 8.41667
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 11 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+21
+5
+37
+27
+ - - > TIME: in hours  :  4.33333
+ - - > PRICE: in dolars $ 6.08333
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 12 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+22
+27
+ - - > TIME: in hours  :  2
+ - - > PRICE: in dolars $ 3.75
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 13 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+23
+36
+ - - > TIME: in hours  :  2
+ - - > PRICE: in dolars $ 4.25
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 14 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+24
+28
+ - - > TIME: in hours  :  2
+ - - > PRICE: in dolars $ 2.5625
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 15 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+25
+24
+28
+ - - > TIME: in hours  :  3
+ - - > PRICE: in dolars $ 4.3125
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 16 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+26
+36
+ - - > TIME: in hours  :  2
+ - - > PRICE: in dolars $ 2.75
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 17 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+27
+ - - > TIME: in hours  :  1
+ - - > PRICE: in dolars $ 1
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 18 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+28
+ - - > TIME: in hours  :  1
+ - - > PRICE: in dolars $ 2
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 19 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+30
+5
+37
+27
+ - - > TIME: in hours  :  4.66667
+ - - > PRICE: in dolars $ 6.33333
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 20 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+33
+21
+5
+37
+27
+ - - > TIME: in hours  :  5.33333
+ - - > PRICE: in dolars $ 8.58333
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 21 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+34
+14
+18
+28
+ - - > TIME: in hours  :  4.5
+ - - > PRICE: in dolars $ 6.9375
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 22 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+35
+20
+30
+5
+37
+27
+ - - > TIME: in hours  :  6.66667
+ - - > PRICE: in dolars $ 10.1667
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 23 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+36
+ - - > TIME: in hours  :  1
+ - - > PRICE: in dolars $ 1
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 24 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+37
+27
+ - - > TIME: in hours  :  2
+ - - > PRICE: in dolars $ 2.75
+0.10user 0.00system 0:00.10elapsed 99%CPU (0avgtext+0avgdata 3404maxresident)k
+0inputs+0outputs (0major+142minor)pagefaults 0swaps

@@ -18,7 +18,6 @@ int main(int argc, char const *argv[])
 {     
      //procedure to load flights into vector flights
      if(*++argv!=NULL){
-          //agency.loadFlights(*argv);
           nature.agency.loadFlights(*argv);
           if(*++argv!=NULL){
                number_individuals = strtol(*argv,(char**)argv,10);

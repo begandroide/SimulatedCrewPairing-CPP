@@ -13,16 +13,16 @@ using namespace std;
  */
 class Individual{
 private:
-    int size;
+    double size;
     float price;
     double time;
     vector<int> chromosomes; //vuelos que lo componen
     float fitness;
 public:
-    Individual(int);
-    Individual(int,vector<int>);
-    Individual(int ,float , float , std::vector<int>);
-    Individual(int ,double ,float , float , std::vector<int>); 
+    Individual(double);
+    Individual(double,vector<int>);
+    Individual(double ,float , float , std::vector<int>);
+    Individual(double ,double ,float , float , std::vector<int>); 
     
     /*---------------------------------Operators---------------------------------*/
     //static Individual* getGreedyIndividual(int); made by nature
@@ -33,7 +33,7 @@ public:
     
 
     /*---------------------------------Setters---------------------------------*/
-    void setSize(int);
+    void setSize(double);
     void setTime(double);
     void setPrice(float);
     void setFitness(float);
@@ -41,7 +41,7 @@ public:
     void mutate(float);
     
     /*---------------------------------Getters---------------------------------*/
-    int getSize();
+    double getSize();
     double getTime();
     float getPrice();
     vector<int> getChromosomes();

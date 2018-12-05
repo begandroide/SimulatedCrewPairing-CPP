@@ -6,7 +6,7 @@ using namespace std;
 const double MIN_BETWEN_FLIGHT = 0.5;
 const double MAX_BETWEN_FLIGHT = 4.0;
 const double MAX_TIME_DUTY = 12.0;
-const double MAX_TIME_FLIGHT = 0.5;
+const double MAX_TIME_FLIGHT = 8.0;
 
 bool Nature::exists(vector<int> usados, int position){
      bool used = false;
@@ -99,29 +99,27 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
      int size;
      float price, fitness;
      vector<int> chromosomes;
+     //push chromosome parameter to vector chromosomes
      chromosomes.push_back(id_flight_start);
-     //airport llegada ya que el primer vuelo del duty viene del parametro de la func.
+     
+     //airport llegada, because the first fligth of duty its in param of func
      string airport_llegada = agency.getFlights().at(id_flight_start-1).aeropuerto_fin;
-    // cout<<airport_llegada<<endl;
      
-     //buscamos el siguiente disponible desde la ciudad de 
-     //llegada a una hora acorde; respetando las reglas.
-     
+     //usados, vector to know ids used
      vector<int> usados = vector<int>();
      usados.push_back(id_flight_start);
 
-     bool init = true;
-     bool fin = false;
-     //supongamos 8 cromosomas máximo en el duty
-     for(int a = 0; a <= 13; a++){ //for each chromosome
+     // look for next available from arrived airport 
+     // take order to time and rules.
+     //  we suposed 15 chromosomes max in duty
+     for(int a = 0; a <= 15; a++){ //for each chromosome
           for(int i = 0; i < agency.getFlights().size();i++){
                if( airport_llegada.compare( agency.getFlights().at(i).aeropuerto_init ) == 0)
                {
-                    //comprobar si está en la lista de utilizados por este duty
-                    //cout<<"por -> ";
+                    // prove if the currect fligth its used for current duty
                     //cout<< agency.getFlights().at(i).id<<endl;
-                    bool used = exists(usados,i);
-                    bool valid = validFlight(chromosomes,i);   
+                    bool used = exists(usados,i); //if exist
+                    bool valid = validFlight(chromosomes,i);   //if take order to rules of time
                     //si no fue usado lo usamos
                     if(used!=true  && valid){
                          usados.push_back(agency.getFlights().at(i).id);
@@ -134,20 +132,25 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
                }
           }
      }
-
+     size = chromosomes.size();
+     // calculate price (OK) 
+     double time = 0.0;
      for(int z = 0; z < chromosomes.size();z++){
-          cout<<chromosomes.at(z)<<endl;
+          time += agency.getFlights().at(chromosomes.at(z)-1).timeFlight;
+          //cout<<chromosomes.at(z)<<endl;
+          //cout<<to_string(agency.getFlights().at(chromosomes.at(z)-1).timeFlight)<<endl;
      }
-     return NULL;
+     // calculate time to this duty
+     
+     return Individual(size, time,0,0,chromosomes);
 };
-
 
 
 void Nature::makePopulation(int numGeneration, int numIndividuals){
      vector<Individual>* individues = new vector<Individual>;
      int discover = 1;
      for(int i = 0;i<numIndividuals;i++){
-          cout<<"-----individual number -> "+to_string(i+1)<<endl;
+          //cout<<"-----individual number -> "+to_string(i+1)<<endl;
           if(discover+10>agency.getFlights().size()){
                discover = (discover/(3*i))+1;
           }

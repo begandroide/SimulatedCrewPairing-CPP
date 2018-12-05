@@ -15,12 +15,14 @@ class Individual{
 private:
     int size;
     float price;
+    double time;
     vector<int> chromosomes; //vuelos que lo componen
     float fitness;
 public:
     Individual(int);
     Individual(int,vector<int>);
-    Individual(int , float , float , std::vector<int>); 
+    Individual(int ,float , float , std::vector<int>);
+    Individual(int ,double ,float , float , std::vector<int>); 
     
     /*---------------------------------Operators---------------------------------*/
     //static Individual* getGreedyIndividual(int); made by nature
@@ -32,6 +34,7 @@ public:
 
     /*---------------------------------Setters---------------------------------*/
     void setSize(int);
+    void setTime(double);
     void setPrice(float);
     void setFitness(float);
     void setChromosome(vector<int>);
@@ -39,6 +42,7 @@ public:
     
     /*---------------------------------Getters---------------------------------*/
     int getSize();
+    double getTime();
     float getPrice();
     vector<int> getChromosomes();
     float getFitness();

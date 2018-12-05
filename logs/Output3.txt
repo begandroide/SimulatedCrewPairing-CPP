@@ -1,0 +1,134 @@
+g++ -O3 -o out/fly out/individual.o out/flight.o out/agency.o  out/nature.o out/main.o 
+/usr/bin/time out/fly instances/instancia.csv
+Vuelos satisfactoriamente cargados!
+Number of Individual per generation not given, set default: 23
+1
+1
+1
+1
+1
+1
+3
+1.25
+1
+1
+1
+1
+0
+1
+1
+1
+1
+1
+1
+3
+0
+1.41667
+1
+1
+1
+1
+3
+1
+1
+1
+0
+1.33333
+1.41667
+1
+1
+1
+1
+3
+1
+1
+1
+1
+1
+3
+1.25
+1.25
+1
+1
+1
+1
+0
+0.833333
+3.75
+1
+1
+1
+1
+1
+0
+-----individual number -> 1
+1
+32
+8
+11
+14
+18
+28
+-----individual number -> 2
+3
+33
+21
+5
+37
+27
+-----individual number -> 3
+9
+12
+8
+11
+14
+18
+28
+-----individual number -> 4
+27
+-----individual number -> 5
+7
+8
+11
+14
+18
+28
+-----individual number -> 6
+21
+5
+37
+27
+-----individual number -> 7
+4
+7
+8
+11
+14
+18
+28
+-----individual number -> 8
+12
+8
+11
+14
+18
+28
+-----individual number -> 9
+2
+3
+33
+21
+5
+37
+27
+-----individual number -> 10
+6
+10
+16
+20
+30
+5
+37
+27
+0.02user 0.00system 0:00.03elapsed 96%CPU (0avgtext+0avgdata 3488maxresident)k
+0inputs+0outputs (0major+143minor)pagefaults 0swaps

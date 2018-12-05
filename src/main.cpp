@@ -33,6 +33,15 @@ int main(int argc, char const *argv[])
      }
   
      nature.makePopulation(0,10); //0 is generation number zero
+
+     for(int z = 0; z < nature.population.at(0).size();z++){
+          cout<<"-----individual number -> "+to_string(z+1)<<endl;
+          for(int x = 0; x < nature.population.at(0).at(z).getSize();x++){
+               cout<<nature.population.at(0).at(z).getChromosomes().at(x)<<endl;
+          }
+          cout<<"price of this: in hours$";
+          cout<<nature.population.at(0).at(z).getTime()<<endl;
+     }
      /*data loaded in vector flights*/
 
      //nature.agency.resume(); //to show all table flights

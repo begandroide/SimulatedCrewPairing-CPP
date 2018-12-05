@@ -13,6 +13,7 @@ public:
     /*---------------------------------Operators---------------------------------*/
     bool exists(vector<int>,int);
     bool validFlight(vector<int>,int);
+    void showGeneration(int);
      /*
      * Function to poblate, depends of version from generation.
      * param1: version of generation

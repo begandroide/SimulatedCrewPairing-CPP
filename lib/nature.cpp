@@ -80,6 +80,60 @@ int compareHour (string hora_one,string hora_two){
      }
 }
 
+double getIdleTime (string hora_one,string hora_two){
+     int hourDif, minDif;
+	string hora_termino_one = string();
+	string min_termino_one = string();
+	string hora_inicio_two = string();
+	string min_inicio_two = string();
+     
+	hora_termino_one = hora_one.substr(0,2);
+	min_termino_one = hora_one.substr(3,5);
+	hora_inicio_two = hora_two.substr(0,2);
+	min_inicio_two = hora_two.substr(3,5);
+
+     hourDif = stoi(hora_inicio_two) - stoi(hora_termino_one);
+     if (hourDif < 0) {
+          return 0;   
+     }else{
+          int min_init = stoi(min_inicio_two);
+          int min_fin = stoi(min_termino_one);     
+          if(hourDif == 1){
+                    if(min_init != min_fin){
+                         if(min_fin == 0){
+                              minDif = 60-min_init;
+                         }else{
+                              minDif = stoi(min_inicio_two)  + 60 - stoi(min_termino_one);
+                         }
+                         hourDif = 0;
+                    }else{
+                         minDif = 0;
+                         hourDif = 1;
+                    }
+          }else{
+               if(min_init == 0 &&  min_fin == 0){
+                    minDif = 0;
+               }else {
+                    if(min_init != 0 && min_fin == 0 ){
+                         minDif = min_init;
+                    }else{
+                         if(min_init == 0 && min_fin != 0 ){
+                         minDif = min_fin;
+                         }else{
+                              minDif = min_fin + (60 - min_init);
+                              //cout<<minDif<<endl;
+                         }
+                    }
+               }
+          }
+     } 
+    // cout<<hourDif<<endl;
+    // cout<<minDif<<endl;
+
+	double time_dif = (double)hourDif+(minDif/60.0);
+     //cout<<to_string(time_dif)<<endl;
+     return time_dif;
+}
 
 bool Nature::validFlight(vector<int> chromosomes, int position){
      int id = chromosomes.at( chromosomes.size() - 1);
@@ -93,7 +147,6 @@ bool Nature::validFlight(vector<int> chromosomes, int position){
           return false;
      }
 }
-
 
 Individual Nature::getGreedyIndividual(int id_flight_start){
      int size;
@@ -133,19 +186,28 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
           }
      }
      size = chromosomes.size();
-     // calculate price (OK) 
+     // calculate time (OK) 
      double time = 0.0;
      for(int z = 0; z < chromosomes.size();z++){
           time += agency.getFlights().at(chromosomes.at(z)-1).timeFlight;
+     }
+     
+     // calculate price to this duty
+     price = agency.getFlights().at(chromosomes.at(0)).timeFlight;
+     for(int z = 0; z < chromosomes.size();z++){
+          if(z>0){
+               price += agency.getFlights().at(chromosomes.at(z)-1).timeFlight;
+               price += 0.75*getIdleTime(agency.getFlights().at(chromosomes.at(z-1)-1).horaFin,agency.getFlights().at(chromosomes.at(z)-1).horaInicio);
+          }
+     }
+          //cout<<"total price  $"<<price<<endl;        
           //cout<<chromosomes.at(z)<<endl;
           //cout<<to_string(agency.getFlights().at(chromosomes.at(z)-1).timeFlight)<<endl;
-     }
-     // calculate time to this duty
      
-     return Individual(size, time,0,0,chromosomes);
+     return Individual(size, time,price,0,chromosomes);
 };
 
-
+//main function of librarie Nature
 void Nature::makePopulation(int numGeneration, int numIndividuals){
      vector<Individual>* individues = new vector<Individual>;
      int discover = 1;
@@ -159,3 +221,19 @@ void Nature::makePopulation(int numGeneration, int numIndividuals){
      }
      population.push_back(*individues);
 };
+
+void Nature::showGeneration(int number_gen){
+     cout<<"o---------------------------------------------------------------------o"<<endl;
+     cout<<"o---------------------------------------------------------------------o"<<endl;
+     cout<<"o--------------------Showing Generation Number "<<number_gen<<" ---------------------o"<<endl;
+     cout<<"o---------------------------------------------------------------------o"<<endl;
+     cout<<"o---------------------------------------------------------------------o"<<endl;
+     for(int z = 0; z < population.at(number_gen).size();z++){
+          cout<<"<~~~~~~~~~~~~~~~~~~~~~~~~individual number "<<to_string(z+1)<<" ~~~~~~~~~~~~~~~~~~~~~~~~~>"<<endl;
+          for(int x = 0; x < population.at(number_gen).at(z).getSize();x++){
+               cout<<population.at(number_gen).at(z).getChromosomes().at(x)<<endl;
+          }
+          cout<<" - - > TIME: in hours  :  "<<population.at(number_gen).at(z).getTime()<<endl;
+          cout<<" - - > PRICE: in dolars $ "<<population.at(number_gen).at(z).getPrice()<<endl;
+     }
+} 

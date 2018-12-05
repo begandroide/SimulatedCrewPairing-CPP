@@ -46,8 +46,11 @@ double getDifferenceTime(string hora_one, string hora_two){
 				}
 			}
 		}
+		if(hourDif > 1){
+			hourDif -= 1;
+		}
 	} 
-//	cout<<(double)hourDif+minDif/60.0<<endl;
+	//cout<<(double)hourDif+minDif/60.0<<endl;
 	return (double)hourDif+(minDif/60.0);
 }
 
@@ -89,8 +92,8 @@ Flight Agency::getLine(char* line)
     	char* hora_salida = getString(line,3);
     	char* hora_llegada = getString(line,4);
 	double timeFlight = getDifferenceTime(hora_salida,hora_llegada);
-//	cout<<"timee calculated ->";
-//	cout <<timeFlight<<endl;
+	//cout<<"timee calculated ->";
+	//cout <<timeFlight<<endl;
     	int ret;
     	ret = std::atoi(string_id_vuelo);
 	Flight flight = Flight(ret,timeFlight,string_ciudad_salida,string_ciudad_llegada,hora_salida,hora_llegada);

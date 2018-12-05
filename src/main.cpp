@@ -32,7 +32,7 @@ int main(int argc, char const *argv[])
           exit(0);
      }
   
-     nature.makePopulation(0,1); //0 is generation number zero
+     nature.makePopulation(0,10); //0 is generation number zero
      /*data loaded in vector flights*/
 
      //nature.agency.resume(); //to show all table flights

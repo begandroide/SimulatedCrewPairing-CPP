@@ -6,13 +6,18 @@ using namespace std;
 class Flight{
 public:
 
-    int        id;
+    int  id;
+    double timeFlight;
     std::string   aeropuerto_init; //o city
     std::string   aeropuerto_fin;  //o city
     std::string   horaInicio;
     std::string   horaFin;
-     Flight(int,std::string,std::string,std::string,std::string);
+
+    /*----------------------------------Constructor------------------------------ */
+     Flight(int,double,std::string,std::string,std::string,std::string);
+    
      /*---------------------------------Operators---------------------------------*/
+     void calculateTimeFlight();
      /*---------------------------------Setters---------------------------------*/
      void setId(int);
      void setAir_init(std::string);

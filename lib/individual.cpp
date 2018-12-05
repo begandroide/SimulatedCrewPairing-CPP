@@ -27,6 +27,15 @@ Individual::Individual(int _size, float _price, float _fitness, std::vector<int>
      chromosomes = _chromosomes;
 }
 
+Individual::Individual(int _size, double _time, float _price, float _fitness, std::vector<int> _chromosomes)
+{
+     size = _size;
+     time = _time;
+     price = _price;
+     fitness = _fitness;
+     chromosomes = _chromosomes;
+}
+
 void Individual::setSize(int _size)
 {
      size = _size;
@@ -51,6 +60,10 @@ void Individual::setChromosome(std::vector<int> _chromosomes)
 int Individual::getSize()
 {
      return size;
+}
+
+double Individual::getTime(){
+     return time;
 }
 
 float Individual::getPrice()

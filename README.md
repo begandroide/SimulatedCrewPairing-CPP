@@ -1,5 +1,9 @@
 # Airline Crew Pairing - Modelado y Programación
 
+Para dejar en logs los output con evaluacion de tiempo:
+```bash
+  make test1 2>&1 | tee logs/Output0.txt
+```
 **Técnica asignada :** Algoritmos Evolutivos + Greedy
 
 - Greedy: Usado para generar instancias iniciales (i.e una población de individuos iniciales).

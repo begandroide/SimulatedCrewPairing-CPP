@@ -22,6 +22,7 @@ bool Nature::exists(vector<int> usados, int position){
      return used;
 }
 
+//function to prove if its valid relation two flights
 int compareHour (string hora_one,string hora_two){
      int hourDif, minDif;
 	string hora_termino_one = string();
@@ -76,12 +77,8 @@ int compareHour (string hora_one,string hora_two){
      } 
     // cout<<hourDif<<" ";
     // cout<<minDif<<endl;
-
 	double time_dif = (double)hourDif+(minDif/60.0);
      if(time_dif>MIN_BETWEN_FLIGHT && time_dif < MAX_BETWEN_FLIGHT){
-          /*cout<<"time dif->";
-          cout<<to_string(time_dif)<<endl;
-          cout<<"----------------...------------"<<endl;*/
           return 1;
      }else{
           return 0;
@@ -233,7 +230,7 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
           time += agency.getFlights().at(chromosomes.at(z)-1).timeFlight;
      }
 
-     if(time > MAX_TIME_FLIGHT || time <3){ //time can vary depending of objectives of bussines
+     if(time > MAX_TIME_FLIGHT || time<3){ //time can vary depending of objectives of bussines
           //cout<<"time-> "<<time<<endl;
           chromosomes.clear();
           return Individual(size, chromosomes);
@@ -256,6 +253,22 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
      return Individual(size, time,price,0,chromosomes);
 };
 
+void selection_natural(vector<Individual> individues){
+     int MAX_POP = 23;
+     double minTime = 100;
+     int id_borrar = 0;
+     for(int i = 0; i<individues.size();i++){
+          if(individues.at(i).getPrice() < minTime){
+               if(individues.at(i).getPrice() - individues.at(i).getTime() > 4.5 ){
+                    minTime = individues.at(i).getPrice();
+                    id_borrar = i;
+               }
+          }
+     }
+     cout<<id_borrar<<endl;
+     cout<<individues.at(id_borrar).getPrice()<<endl;
+};
+
 //main function of librarie Nature
 void Nature::makePopulation(int numGeneration, int numIndividuals){
      vector<Individual>* individues = new vector<Individual>;
@@ -269,6 +282,9 @@ void Nature::makePopulation(int numGeneration, int numIndividuals){
                individues->push_back(indi); //push individue
           }
      }
+     //process of selection
+     selection_natural(*individues);
+
      population.push_back(*individues);
 };
 
@@ -279,7 +295,7 @@ void Nature::showGeneration(int number_gen){
      cout<<"o---------------------------------------------------------------------o"<<endl;
      cout<<"o---------------------------------------------------------------------o"<<endl;
      for(int z = 0; z < population.at(number_gen).size();z++){
-          cout<<"<~~~~~~~~~~~~~~~~~~~~~~~~individual number "<<to_string(z+1)<<" ~~~~~~~~~~~~~~~~~~~~~~~~~>"<<endl;
+          cout<<"<~~~~~~~~~~~~~~~~~~~~~~~~individual number "<<to_string(z)<<" ~~~~~~~~~~~~~~~~~~~~~~~~~>"<<endl;
           for(int x = 0; x < population.at(number_gen).at(z).getChromosomes().size();x++){
                cout<<population.at(number_gen).at(z).getChromosomes().at(x)<<endl;
           }

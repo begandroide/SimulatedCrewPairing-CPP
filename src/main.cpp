@@ -18,7 +18,6 @@ int main(int argc, char const *argv[])
 {     
      //procedure to load flights into vector flights
      if(*++argv!=NULL){
-          //agency.loadFlights(*argv);
           nature.agency.loadFlights(*argv);
           if(*++argv!=NULL){
                number_individuals = strtol(*argv,(char**)argv,10);
@@ -32,16 +31,10 @@ int main(int argc, char const *argv[])
           exit(0);
      }
   
-     nature.makePopulation(0,10); //0 is generation number zero
+     nature.makePopulation(0,23); //0 is generation number zero, 23 default individuals
+     nature.showGeneration(0); //show generation number 0
 
-     for(int z = 0; z < nature.population.at(0).size();z++){
-          cout<<"-----individual number -> "+to_string(z+1)<<endl;
-          for(int x = 0; x < nature.population.at(0).at(z).getSize();x++){
-               cout<<nature.population.at(0).at(z).getChromosomes().at(x)<<endl;
-          }
-          cout<<"price of this: in hours$";
-          cout<<nature.population.at(0).at(z).getTime()<<endl;
-     }
+     
      /*data loaded in vector flights*/
 
      //nature.agency.resume(); //to show all table flights

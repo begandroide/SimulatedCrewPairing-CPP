@@ -3,7 +3,7 @@
 #include "individual.hpp"
 using namespace std;
 
-Individual::Individual(int _size)
+Individual::Individual(double _size)
 {
      size = _size;
      fitness = 0;
@@ -11,7 +11,7 @@ Individual::Individual(int _size)
 }
 
 
-Individual::Individual(int _size,std::vector<int> _chromosomes)
+Individual::Individual(double _size,std::vector<int> _chromosomes)
 {
      size = _size;
      price = 0;
@@ -19,7 +19,7 @@ Individual::Individual(int _size,std::vector<int> _chromosomes)
      chromosomes = _chromosomes;
 }
 
-Individual::Individual(int _size, float _price, float _fitness, std::vector<int> _chromosomes)
+Individual::Individual(double _size, float _price, float _fitness, std::vector<int> _chromosomes)
 {
      size = _size;
      price = _price;
@@ -27,7 +27,7 @@ Individual::Individual(int _size, float _price, float _fitness, std::vector<int>
      chromosomes = _chromosomes;
 }
 
-Individual::Individual(int _size, double _time, float _price, float _fitness, std::vector<int> _chromosomes)
+Individual::Individual(double _size, double _time, float _price, float _fitness, std::vector<int> _chromosomes)
 {
      size = _size;
      time = _time;
@@ -36,7 +36,7 @@ Individual::Individual(int _size, double _time, float _price, float _fitness, st
      chromosomes = _chromosomes;
 }
 
-void Individual::setSize(int _size)
+void Individual::setSize(double _size)
 {
      size = _size;
 };
@@ -57,7 +57,7 @@ void Individual::setChromosome(std::vector<int> _chromosomes)
      chromosomes =    _chromosomes;
 };
 
-int Individual::getSize()
+double Individual::getSize()
 {
      return size;
 }

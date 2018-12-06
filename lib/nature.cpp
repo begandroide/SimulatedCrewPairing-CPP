@@ -7,6 +7,8 @@ const double MIN_BETWEN_FLIGHT = 0.5;
 const double MAX_BETWEN_FLIGHT = 4.0;
 const double MAX_TIME_DUTY = 12.0;
 const double MAX_TIME_FLIGHT = 8.0;
+const string BASE1 = "IST";
+const string BASE2 = "ANK";
 
 bool Nature::exists(vector<int> usados, int position){
      bool used = false;
@@ -51,11 +53,17 @@ int compareHour (string hora_one,string hora_two){
                          hourDif = 1;
                     }
           }else{
+               if(min_init!=min_fin){
+                    if(hourDif == 0 && min_init<min_fin){
+                         //cout<<"zero"<<endl;
+                         return 0;
+                    }
+               }
                if(min_init == 0 &&  min_fin == 0){
                     minDif = 0;
                }else {
                     if(min_init != 0 && min_fin == 0 ){
-                         minDif = min_init;
+                         minDif = -min_init;
                     }else{
                          if(min_init == 0 && min_fin != 0 ){
                          minDif = min_fin;
@@ -66,7 +74,7 @@ int compareHour (string hora_one,string hora_two){
                }
           }
      } 
-    // cout<<hourDif<<endl;
+    // cout<<hourDif<<" ";
     // cout<<minDif<<endl;
 
 	double time_dif = (double)hourDif+(minDif/60.0);
@@ -137,10 +145,8 @@ double getIdleTime (string hora_one,string hora_two){
 
 bool Nature::validFlight(vector<int> chromosomes, int position){
      int id = chromosomes.at( chromosomes.size() - 1);
-     //cout<<id<<endl;
      Flight last = agency.getFlights().at(id-1);
      Flight actual = agency.getFlights().at(position);
-    // cout<<last.horaInicio<<endl;
      if( compareHour(last.horaFin, actual.horaInicio) == 1){
           return true;
      }else{
@@ -153,6 +159,15 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
      float price, fitness;
      vector<int> chromosomes;
      //push chromosome parameter to vector chromosomes
+     int flag = 0;
+     if(agency.getFlights().at(id_flight_start-1).aeropuerto_init.compare(BASE1) == 0 || agency.getFlights().at(id_flight_start-1).aeropuerto_init.compare(BASE2) == 0 )
+     {
+          flag =1;
+     };
+     if(flag == 0) {
+          chromosomes.clear();
+          return Individual(size, chromosomes);
+     }
      chromosomes.push_back(id_flight_start);
      
      //airport llegada, because the first fligth of duty its in param of func
@@ -166,7 +181,7 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
      // take order to time and rules.
      //  we suposed 15 chromosomes max in duty
      for(int a = 0; a <= 15; a++){ //for each chromosome
-          for(int i = 0; i < agency.getFlights().size();i++){
+          for(int i = 0; i < agency.getFlights().size()-1;i++){
                if( airport_llegada.compare( agency.getFlights().at(i).aeropuerto_init ) == 0)
                {
                     // prove if the currect fligth its used for current duty
@@ -174,7 +189,8 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
                     bool used = exists(usados,i); //if exist
                     bool valid = validFlight(chromosomes,i);   //if take order to rules of time
                     //si no fue usado lo usamos
-                    if(used!=true  && valid){
+               
+                    if(used!=true  && valid){                     
                          usados.push_back(agency.getFlights().at(i).id);
                          chromosomes.push_back(agency.getFlights().at(i).id);
                          //cout<<"chromosme added"<<endl;
@@ -190,26 +206,39 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
      size = agency.getFlights().at(chromosomes.at(0)).timeFlight;
      for(int z = 0; z < chromosomes.size();z++){
           if(z>0){
+               if(size > MAX_TIME_DUTY){
+                    //nos quedamos en z
+                    int sizes = chromosomes.size();
+                    for(int j = z; j<=sizes;j++){
+                         chromosomes.pop_back();
+                    }
+                    break;
+               }
                size += agency.getFlights().at(chromosomes.at(z)-1).timeFlight;
                size += getIdleTime(agency.getFlights().at(chromosomes.at(z-1)-1).horaFin,agency.getFlights().at(chromosomes.at(z)-1).horaInicio);
           }
      }
-     if(size > MAX_TIME_DUTY){
+     int flag2 = 0;
+     if( agency.getFlights().at(chromosomes.at(chromosomes.size()-1)).aeropuerto_fin.compare(BASE1)==0 || agency.getFlights().at(chromosomes.at(chromosomes.size()-1)).aeropuerto_fin.compare(BASE2)==0 ){
+          flag2=1;
+     }
+     if(flag2==0){
           chromosomes.clear();
-          return Individual(size, chromosomes);
+          return Individual(size,chromosomes);
      }
 
-    // cout<<"size total -> "<<size<<endl;
      // calculate time (OK) 
      double time = 0.0;
      for(int z = 0; z < chromosomes.size();z++){
           time += agency.getFlights().at(chromosomes.at(z)-1).timeFlight;
      }
 
-     if(time > MAX_TIME_FLIGHT){
+     if(time > MAX_TIME_FLIGHT || time <3){ //time can vary depending of objectives of bussines
+          //cout<<"time-> "<<time<<endl;
           chromosomes.clear();
           return Individual(size, chromosomes);
      }
+
 
      
      // calculate price to this duty (OK)
@@ -235,18 +264,9 @@ void Nature::makePopulation(int numGeneration, int numIndividuals){
           if(individues->size() == numIndividuals){
                break;
           }
-          //cout<<"-----individual number -> "+to_string(i+1)<<endl;
-     /*     
-          if(discover+5>agency.getFlights().size()){
-               discover = (discover/(3*i))+2;
-          }
-          individues->push_back(getGreedyIndividual(discover));
-          discover = 3*discover;
-     */
-          //cout<<"voy por "<<to_string(i+1)<<endl;
           Individual indi = getGreedyIndividual(i+1);
           if(indi.getChromosomes().size() > 0){
-               individues->push_back(indi);
+               individues->push_back(indi); //push individue
           }
      }
      population.push_back(*individues);

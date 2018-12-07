@@ -167,6 +167,10 @@ bool Nature::validFlight(vector<int> chromosomes, int position){
      }
 }
 
+/*
+TODO
+* If time is available, calculate size, time and price in paralell.
+*/
 Individual Nature::getGreedyIndividual(int id_flight_start){
      double size;
      float price, fitness;
@@ -238,8 +242,12 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
           flag2=1;
      }
      if(flag2==0){
-          chromosomes.clear();
-          return Individual(size,chromosomes);
+         while(agency.getFlights().at(chromosomes.at(chromosomes.size()-1)).aeropuerto_fin.compare(BASE1)==0 || agency.getFlights().at(chromosomes.at(chromosomes.size()-1)).aeropuerto_fin.compare(BASE2)==0 ){
+             //nos quedamos en z
+             size -= getIdleTime(agency.getFlights().at(chromosomes.at(chromosomes.size()-2)-1).horaFin,agency.getFlights().at(chromosomes.at(chromosomes.size()-1)-1).horaInicio);
+             size -= agency.getFlights().at(chromosomes.at(chromosomes.size()-1)-1).timeFlight;
+             chromosomes.pop_back();
+         }
      }
 
      // calculate time (OK) 
@@ -248,10 +256,30 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
           time += agency.getFlights().at(chromosomes.at(z)-1).timeFlight;
      }
 
-     if(time > MAX_TIME_FLIGHT || time<3){ //time can vary depending of objectives of bussines
-          //cout<<"time-> "<<time<<endl;
-          chromosomes.clear();
-          return Individual(size, chromosomes);
+     /*
+     TODO 
+      * (WARNING) active this depending of the instance input
+      * 3 to instance 1,
+      * 4 to instance 2,
+      * 6 to instance 3,
+      * time can vary depending of objectives of bussines and data study
+      */
+     if(time > MAX_TIME_FLIGHT || time<6){
+          if(time<6){
+              chromosomes.clear();
+              return Individual(size, chromosomes);
+          }else{
+              while(agency.getFlights().at(chromosomes.at(chromosomes.size()-1)).aeropuerto_fin.compare(BASE1)==0 || agency.getFlights().at(chromosomes.at(chromosomes.size()-1)).aeropuerto_fin.compare(BASE2)==0 ){
+                  //nos quedamos en z
+                  if(chromosomes.size()<3){
+                      return Individual(size,chromosomes);
+                  }
+                  size -= getIdleTime(agency.getFlights().at(chromosomes.at(chromosomes.size()-2)-1).horaFin,agency.getFlights().at(chromosomes.at(chromosomes.size()-1)-1).horaInicio);
+                  size -= agency.getFlights().at(chromosomes.at(chromosomes.size()-1)-1).timeFlight;
+                  time -= agency.getFlights().at(chromosomes.at(chromosomes.size()-1)-1).timeFlight;
+                  chromosomes.pop_back();
+              }
+          }
      }
 
 
@@ -264,73 +292,42 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
                price += 0.75*getIdleTime(agency.getFlights().at(chromosomes.at(z-1)-1).horaFin,agency.getFlights().at(chromosomes.at(z)-1).horaInicio);
           }
      }
-          //cout<<"total price  $"<<price<<endl;        
-          //cout<<chromosomes.at(z)<<endl;
-          //cout<<to_string(agency.getFlights().at(chromosomes.at(z)-1).timeFlight)<<endl;
-     
+
      return Individual(size, time,price,0,chromosomes);
 };
 
 void selection_natural(vector<Individual>* individues){
      int MAX_POP = 23;
 
-     if(individues->size()>23){
-          while(individues->size()>30){
+     if(individues->size()>20){
+          while(individues->size()>20){
                double maxTime = 0;
                int id_borrar = 0;
+                double difTmp = 0.0;
                for(int i = 0; i<individues->size();i++){
                     cout<<"~"<<endl;
                     cout<<"Price"<<individues->at(i).getPrice()<<endl;
                     cout<<"Size"<<individues->at(i).getSize()<<endl;
                     cout<<"Time"<<individues->at(i).getTime()<<endl;
-                    double difTmp = individues->at(i).getPrice() - individues->at(i).getTime();
-                    if(difTmp > 3 ){
+                    difTmp = individues->at(i).getSize() - individues->at(i).getTime();
+                    if(difTmp > 4 ){
+                        cout<<difTmp<<endl;
                          if(maxTime < difTmp){
+                             cout<<"maximo->"<<endl;
                               maxTime = difTmp;
                               id_borrar = i;
                          }
                     }
-                    //if(individues->at(i).getPrice() < minTime){}
                }
+               /*
                cout<<"voy"<<endl;
                cout<<id_borrar<<endl; //id del duty mas molestoso, esto es, el que tiene mas tiempo de no vuelo.
-               cout<<individues->at(id_borrar).getPrice()<<endl;
+               cout<<individues->at(id_borrar).getSize()<<endl;
+               cout<<individues->at(id_borrar).getTime()<<endl;
+               */
                individues->erase(individues->begin() + id_borrar);
           }
      }
-};
-
-//TODO
-//prefers maximum works of workers
-void selection_natural_two(vector<Individual>* individues){
-    int MAX_POP = 23;
-
-    if(individues->size()>23){
-        while(individues->size()>30){
-            double maxTime = 0;
-            double maxTime_fly = 0;
-            int id_borrar = 0;
-            for(int i = 0; i<individues->size();i++){
-                cout<<"~"<<endl;
-                cout<<"Price"<<individues->at(i).getPrice()<<endl;
-                cout<<"Size"<<individues->at(i).getSize()<<endl;
-                cout<<"Time"<<individues->at(i).getTime()<<endl;
-                double difTmp = individues->at(i).getPrice() - individues->at(i).getTime();
-                //maxTime_fly = individues->at(i).getTime();
-                if(difTmp > 3 ){
-                    if(maxTime < difTmp){
-                        maxTime = difTmp;
-                        id_borrar = i;
-                    }
-                }
-                //if(individues->at(i).getPrice() < minTime){}
-            }
-            cout<<"voy"<<endl;
-            cout<<id_borrar<<endl; //id del duty mas molestoso, esto es, el que tiene mas tiempo de no vuelo.
-            cout<<individues->at(id_borrar).getPrice()<<endl;
-            individues->erase(individues->begin() + id_borrar);
-        }
-    }
 };
 
 

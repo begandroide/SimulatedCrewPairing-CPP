@@ -1,0 +1,258 @@
+g++ -O3 -o out/fly out/individual.o out/flight.o out/agency.o  out/nature.o out/main.o 
+/usr/bin/time out/fly instances/Instancias\ -\ 58\ vuelos.csv
+Vuelos satisfactoriamente cargados!
+Number of Individual per generation not given, set default: 23
+o---------------------------------------------------------------------o
+o---------------------------------------------------------------------o
+o--------------------Showing Generation Number 0 ---------------------o
+o---------------------------------------------------------------------o
+o---------------------------------------------------------------------o
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 0 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+1
+4
+3
+ - - > TIME_FLY: in hours  :  4.75
+ - - > PRICE: in dolars $ 8.4375
+ - - > SIZE: in hours      9.66667
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 1 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+2
+5
+12
+22
+ - - > TIME_FLY: in hours  :  5.16667
+ - - > PRICE: in dolars $ 7.85417
+ - - > SIZE: in hours      8.75
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 2 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+3
+6
+15
+25
+49
+ - - > TIME_FLY: in hours  :  6.16667
+ - - > PRICE: in dolars $ 8.29167
+ - - > SIZE: in hours      9
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 3 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+7
+17
+10
+20
+12
+ - - > TIME_FLY: in hours  :  5
+ - - > PRICE: in dolars $ 9.5
+ - - > SIZE: in hours      11
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 4 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+8
+18
+3
+6
+15
+ - - > TIME_FLY: in hours  :  6.16667
+ - - > PRICE: in dolars $ 9.79167
+ - - > SIZE: in hours      11
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 5 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+9
+19
+11
+21
+15
+25
+ - - > TIME_FLY: in hours  :  6
+ - - > PRICE: in dolars $ 10.5
+ - - > SIZE: in hours      12
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 6 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+10
+20
+12
+22
+49
+ - - > TIME_FLY: in hours  :  5
+ - - > PRICE: in dolars $ 10.0625
+ - - > SIZE: in hours      11.75
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 7 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+11
+21
+15
+25
+49
+ - - > TIME_FLY: in hours  :  5
+ - - > PRICE: in dolars $ 7.4375
+ - - > SIZE: in hours      8.25
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 8 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+12
+22
+49
+ - - > TIME_FLY: in hours  :  3
+ - - > PRICE: in dolars $ 6.5625
+ - - > SIZE: in hours      7.75
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 9 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+13
+23
+49
+ - - > TIME_FLY: in hours  :  3
+ - - > PRICE: in dolars $ 6.5625
+ - - > SIZE: in hours      7.75
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 10 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+14
+24
+49
+ - - > TIME_FLY: in hours  :  3
+ - - > PRICE: in dolars $ 5.8125
+ - - > SIZE: in hours      6.75
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 11 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+15
+25
+49
+ - - > TIME_FLY: in hours  :  3
+ - - > PRICE: in dolars $ 3.9375
+ - - > SIZE: in hours      4.25
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 12 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+16
+26
+49
+ - - > TIME_FLY: in hours  :  3
+ - - > PRICE: in dolars $ 4.3125
+ - - > SIZE: in hours      4.75
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 13 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+17
+10
+20
+12
+22
+ - - > TIME_FLY: in hours  :  5
+ - - > PRICE: in dolars $ 9.5
+ - - > SIZE: in hours      11
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 14 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+18
+3
+6
+15
+25
+ - - > TIME_FLY: in hours  :  6.16667
+ - - > PRICE: in dolars $ 9.79167
+ - - > SIZE: in hours      11
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 15 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+19
+11
+21
+15
+25
+49
+ - - > TIME_FLY: in hours  :  6
+ - - > PRICE: in dolars $ 9.9375
+ - - > SIZE: in hours      11.25
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 16 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+20
+12
+22
+49
+ - - > TIME_FLY: in hours  :  4
+ - - > PRICE: in dolars $ 8.3125
+ - - > SIZE: in hours      9.75
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 17 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+21
+15
+25
+49
+ - - > TIME_FLY: in hours  :  4
+ - - > PRICE: in dolars $ 5.6875
+ - - > SIZE: in hours      6.25
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 18 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+27
+30
+3
+ - - > TIME_FLY: in hours  :  4.08333
+ - - > PRICE: in dolars $ 9.77083
+ - - > SIZE: in hours      11.6667
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 19 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+28
+31
+12
+22
+ - - > TIME_FLY: in hours  :  4.5
+ - - > PRICE: in dolars $ 7.5625
+ - - > SIZE: in hours      8.58333
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 20 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+29
+32
+15
+25
+49
+ - - > TIME_FLY: in hours  :  6
+ - - > PRICE: in dolars $ 8.5
+ - - > SIZE: in hours      9.33333
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 21 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+33
+35
+15
+25
+49
+ - - > TIME_FLY: in hours  :  5.33333
+ - - > PRICE: in dolars $ 7.89583
+ - - > SIZE: in hours      8.75
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 22 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+34
+36
+49
+ - - > TIME_FLY: in hours  :  3.33333
+ - - > PRICE: in dolars $ 4.77083
+ - - > SIZE: in hours      5.25
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 23 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+37
+39
+49
+ - - > TIME_FLY: in hours  :  4
+ - - > PRICE: in dolars $ 6.72917
+ - - > SIZE: in hours      7.66667
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 24 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+38
+40
+49
+ - - > TIME_FLY: in hours  :  3.5
+ - - > PRICE: in dolars $ 4.91667
+ - - > SIZE: in hours      5.25
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 25 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+41
+50
+3
+6
+ - - > TIME_FLY: in hours  :  5.16667
+ - - > PRICE: in dolars $ 9.85417
+ - - > SIZE: in hours      11.4167
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 26 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+42
+50
+3
+6
+15
+ - - > TIME_FLY: in hours  :  6.16667
+ - - > PRICE: in dolars $ 10.5417
+ - - > SIZE: in hours      12
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 27 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+43
+51
+3
+6
+ - - > TIME_FLY: in hours  :  5.16667
+ - - > PRICE: in dolars $ 9.85417
+ - - > SIZE: in hours      11.4167
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 28 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+44
+53
+11
+21
+15
+25
+ - - > TIME_FLY: in hours  :  6
+ - - > PRICE: in dolars $ 9.75
+ - - > SIZE: in hours      11
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 29 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+45
+54
+12
+22
+49
+ - - > TIME_FLY: in hours  :  5
+ - - > PRICE: in dolars $ 10.0625
+ - - > SIZE: in hours      11.75
+0.08user 0.00system 0:00.08elapsed 100%CPU (0avgtext+0avgdata 3520maxresident)k
+0inputs+0outputs (0major+145minor)pagefaults 0swaps

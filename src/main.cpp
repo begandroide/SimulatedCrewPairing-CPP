@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
           exit(0);
      }
   
-     nature.makePopulation(0,23); //0 is generation number zero, 23 default individuals
+     nature.makePopulation(0,30); //0 is generation number zero, 30 experimental resutl by data
      nature.showGeneration(0); //show generation number 0
 
      

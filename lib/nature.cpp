@@ -22,6 +22,7 @@ bool Nature::exists(vector<int> usados, int position){
      return used;
 }
 
+//function to prove if its valid relation two flights
 int compareHour (string hora_one,string hora_two){
      int hourDif, minDif;
 	string hora_termino_one = string();
@@ -43,7 +44,8 @@ int compareHour (string hora_one,string hora_two){
           if(hourDif == 1){
                     if(min_init != min_fin){
                          if(min_fin == 0){
-                              minDif = 60-min_init;
+                             minDif = min_init;
+                             //minDif = 60-min_init;
                          }else{
                               minDif = stoi(min_inicio_two)  + 60 - stoi(min_termino_one);
                          }
@@ -57,6 +59,14 @@ int compareHour (string hora_one,string hora_two){
                     if(hourDif == 0 && min_init<min_fin){
                          //cout<<"zero"<<endl;
                          return 0;
+                    }else{
+                        minDif = min_init - min_fin;
+                        double time_dif = (double)hourDif+(minDif/60.0);
+                        if(time_dif>MIN_BETWEN_FLIGHT && time_dif < MAX_BETWEN_FLIGHT){
+                            return 1;
+                        }else{
+                            return 0;
+                        }
                     }
                }
                if(min_init == 0 &&  min_fin == 0){
@@ -76,12 +86,8 @@ int compareHour (string hora_one,string hora_two){
      } 
     // cout<<hourDif<<" ";
     // cout<<minDif<<endl;
-
 	double time_dif = (double)hourDif+(minDif/60.0);
      if(time_dif>MIN_BETWEN_FLIGHT && time_dif < MAX_BETWEN_FLIGHT){
-          /*cout<<"time dif->";
-          cout<<to_string(time_dif)<<endl;
-          cout<<"----------------...------------"<<endl;*/
           return 1;
      }else{
           return 0;
@@ -119,6 +125,13 @@ double getIdleTime (string hora_one,string hora_two){
                          hourDif = 1;
                     }
           }else{
+              if(hourDif > 1){
+                  if(min_init == 0 && min_fin != 0){
+                      hourDif--;
+                      minDif = (60-min_fin);
+                      return (double)hourDif+(minDif/60.0);
+                  }
+              }
                if(min_init == 0 &&  min_fin == 0){
                     minDif = 0;
                }else {
@@ -154,6 +167,10 @@ bool Nature::validFlight(vector<int> chromosomes, int position){
      }
 }
 
+/*
+TODO
+* If time is available, calculate size, time and price in paralell.
+*/
 Individual Nature::getGreedyIndividual(int id_flight_start){
      double size;
      float price, fitness;
@@ -180,7 +197,7 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
      // look for next available from arrived airport 
      // take order to time and rules.
      //  we suposed 15 chromosomes max in duty
-     for(int a = 0; a <= 15; a++){ //for each chromosome
+     for(int a = 0; a <= 7; a++){ //for each chromosome setted to 7 given a max duty time of 12 hours
           for(int i = 0; i < agency.getFlights().size()-1;i++){
                if( airport_llegada.compare( agency.getFlights().at(i).aeropuerto_init ) == 0)
                {
@@ -206,25 +223,31 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
      size = agency.getFlights().at(chromosomes.at(0)).timeFlight;
      for(int z = 0; z < chromosomes.size();z++){
           if(z>0){
-               if(size > MAX_TIME_DUTY){
-                    //nos quedamos en z
-                    int sizes = chromosomes.size();
-                    for(int j = z; j<=sizes;j++){
-                         chromosomes.pop_back();
-                    }
-                    break;
-               }
                size += agency.getFlights().at(chromosomes.at(z)-1).timeFlight;
                size += getIdleTime(agency.getFlights().at(chromosomes.at(z-1)-1).horaFin,agency.getFlights().at(chromosomes.at(z)-1).horaInicio);
           }
      }
+
+    if(size > MAX_TIME_DUTY){
+        while(size>MAX_TIME_DUTY){
+            //nos quedamos en z
+            size -= getIdleTime(agency.getFlights().at(chromosomes.at(chromosomes.size()-2)-1).horaFin,agency.getFlights().at(chromosomes.at(chromosomes.size()-1)-1).horaInicio);
+            size -= agency.getFlights().at(chromosomes.at(chromosomes.size()-1)-1).timeFlight;
+            chromosomes.pop_back();
+        }
+    }
+
      int flag2 = 0;
      if( agency.getFlights().at(chromosomes.at(chromosomes.size()-1)).aeropuerto_fin.compare(BASE1)==0 || agency.getFlights().at(chromosomes.at(chromosomes.size()-1)).aeropuerto_fin.compare(BASE2)==0 ){
           flag2=1;
      }
      if(flag2==0){
-          chromosomes.clear();
-          return Individual(size,chromosomes);
+         while(agency.getFlights().at(chromosomes.at(chromosomes.size()-1)).aeropuerto_fin.compare(BASE1)==0 || agency.getFlights().at(chromosomes.at(chromosomes.size()-1)).aeropuerto_fin.compare(BASE2)==0 ){
+             //nos quedamos en z
+             size -= getIdleTime(agency.getFlights().at(chromosomes.at(chromosomes.size()-2)-1).horaFin,agency.getFlights().at(chromosomes.at(chromosomes.size()-1)-1).horaInicio);
+             size -= agency.getFlights().at(chromosomes.at(chromosomes.size()-1)-1).timeFlight;
+             chromosomes.pop_back();
+         }
      }
 
      // calculate time (OK) 
@@ -233,10 +256,30 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
           time += agency.getFlights().at(chromosomes.at(z)-1).timeFlight;
      }
 
-     if(time > MAX_TIME_FLIGHT || time <3){ //time can vary depending of objectives of bussines
-          //cout<<"time-> "<<time<<endl;
-          chromosomes.clear();
-          return Individual(size, chromosomes);
+     /*
+     TODO 
+      * (WARNING) active this depending of the instance input
+      * 3 to instance 1,
+      * 4 to instance 2,
+      * 6 to instance 3,
+      * time can vary depending of objectives of bussines and data study
+      */
+     if(time > MAX_TIME_FLIGHT || time<6){
+          if(time<6){
+              chromosomes.clear();
+              return Individual(size, chromosomes);
+          }else{
+              while(agency.getFlights().at(chromosomes.at(chromosomes.size()-1)).aeropuerto_fin.compare(BASE1)==0 || agency.getFlights().at(chromosomes.at(chromosomes.size()-1)).aeropuerto_fin.compare(BASE2)==0 ){
+                  //nos quedamos en z
+                  if(chromosomes.size()<3){
+                      return Individual(size,chromosomes);
+                  }
+                  size -= getIdleTime(agency.getFlights().at(chromosomes.at(chromosomes.size()-2)-1).horaFin,agency.getFlights().at(chromosomes.at(chromosomes.size()-1)-1).horaInicio);
+                  size -= agency.getFlights().at(chromosomes.at(chromosomes.size()-1)-1).timeFlight;
+                  time -= agency.getFlights().at(chromosomes.at(chromosomes.size()-1)-1).timeFlight;
+                  chromosomes.pop_back();
+              }
+          }
      }
 
 
@@ -249,12 +292,44 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
                price += 0.75*getIdleTime(agency.getFlights().at(chromosomes.at(z-1)-1).horaFin,agency.getFlights().at(chromosomes.at(z)-1).horaInicio);
           }
      }
-          //cout<<"total price  $"<<price<<endl;        
-          //cout<<chromosomes.at(z)<<endl;
-          //cout<<to_string(agency.getFlights().at(chromosomes.at(z)-1).timeFlight)<<endl;
-     
+
      return Individual(size, time,price,0,chromosomes);
 };
+
+void selection_natural(vector<Individual>* individues){
+     int MAX_POP = 23;
+
+     if(individues->size()>20){
+          while(individues->size()>20){
+               double maxTime = 0;
+               int id_borrar = 0;
+                double difTmp = 0.0;
+               for(int i = 0; i<individues->size();i++){
+                    cout<<"~"<<endl;
+                    cout<<"Price"<<individues->at(i).getPrice()<<endl;
+                    cout<<"Size"<<individues->at(i).getSize()<<endl;
+                    cout<<"Time"<<individues->at(i).getTime()<<endl;
+                    difTmp = individues->at(i).getSize() - individues->at(i).getTime();
+                    if(difTmp > 4 ){
+                        cout<<difTmp<<endl;
+                         if(maxTime < difTmp){
+                             cout<<"maximo->"<<endl;
+                              maxTime = difTmp;
+                              id_borrar = i;
+                         }
+                    }
+               }
+               /*
+               cout<<"voy"<<endl;
+               cout<<id_borrar<<endl; //id del duty mas molestoso, esto es, el que tiene mas tiempo de no vuelo.
+               cout<<individues->at(id_borrar).getSize()<<endl;
+               cout<<individues->at(id_borrar).getTime()<<endl;
+               */
+               individues->erase(individues->begin() + id_borrar);
+          }
+     }
+};
+
 
 //main function of librarie Nature
 void Nature::makePopulation(int numGeneration, int numIndividuals){
@@ -269,6 +344,9 @@ void Nature::makePopulation(int numGeneration, int numIndividuals){
                individues->push_back(indi); //push individue
           }
      }
+     //process of selection
+     selection_natural(individues);
+
      population.push_back(*individues);
 };
 
@@ -279,11 +357,12 @@ void Nature::showGeneration(int number_gen){
      cout<<"o---------------------------------------------------------------------o"<<endl;
      cout<<"o---------------------------------------------------------------------o"<<endl;
      for(int z = 0; z < population.at(number_gen).size();z++){
-          cout<<"<~~~~~~~~~~~~~~~~~~~~~~~~individual number "<<to_string(z+1)<<" ~~~~~~~~~~~~~~~~~~~~~~~~~>"<<endl;
+          cout<<"<~~~~~~~~~~~~~~~~~~~~~~~~individual number "<<to_string(z)<<" ~~~~~~~~~~~~~~~~~~~~~~~~~>"<<endl;
           for(int x = 0; x < population.at(number_gen).at(z).getChromosomes().size();x++){
                cout<<population.at(number_gen).at(z).getChromosomes().at(x)<<endl;
           }
-          cout<<" - - > TIME: in hours  :  "<<population.at(number_gen).at(z).getTime()<<endl;
+          cout<<" - - > TIME_FLY: in hours  :  "<<population.at(number_gen).at(z).getTime()<<endl;
           cout<<" - - > PRICE: in dolars $ "<<population.at(number_gen).at(z).getPrice()<<endl;
+          cout<<" - - > SIZE: in hours      "<<population.at(number_gen).at(z).getSize()<<endl;
      }
 } 

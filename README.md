@@ -4,6 +4,14 @@ Para dejar en logs los output con evaluacion de tiempo:
 ```bash
   make test1 2>&1 | tee logs/Output0.txt
 ```
+
+## TODO Section
+- [x] Generation Initial.
+- [x] Selection Function.
+- [ ] Fitness function. !Dudas!
+- [ ] Mutation. Profe recomendó 2 tipos, con probabilidades distintas de aparición; una que acepte cosas mejores que la solucion actual y otro que seleccione sin importar si es mejor o no.
+- [ ] Elitism.
+
 **Técnica asignada :** Algoritmos Evolutivos + Greedy
 
 - Greedy: Usado para generar instancias iniciales (i.e una población de individuos iniciales).

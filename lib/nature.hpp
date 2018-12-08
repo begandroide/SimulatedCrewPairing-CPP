@@ -3,12 +3,14 @@
 #include <vector>
 #include "agency.hpp"
 #include "individual.hpp"
+#include "operators.hpp"
 using namespace std;
 
 class Nature{
 public:
      Agency agency;
      vector<vector<Individual>> population; // vectors of vectors to generations.
+     Operators operators;
 
     /*---------------------------------Operators---------------------------------*/
     bool exists(vector<int>,int);

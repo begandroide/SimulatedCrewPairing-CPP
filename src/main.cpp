@@ -33,7 +33,7 @@ int main(int argc, char const *argv[])
   
      nature.makePopulation(0,30); //0 is generation number zero, 30 experimental resutl by data
      nature.showGeneration(0); //show generation number 0
-
+     nature.operators.getFitness(&nature.population.at(0),nature.agency.getFlights().size());
      
      /*data loaded in vector flights*/
 

@@ -1,0 +1,203 @@
+g++ -O3 -o out/fly out/individual.o out/flight.o out/agency.o  out/nature.o out/operators.o out/main.o 
+/usr/bin/time out/fly instances/Instancias\ -\ 58\ vuelos.csv
+Vuelos satisfactoriamente cargados!
+Number of Individual per generation not given, set default: 23
+o---------------------------------------------------------------------o
+o---------------------------------------------------------------------o
+o--------------------Showing Generation Number 0 ---------------------o
+o---------------------------------------------------------------------o
+o---------------------------------------------------------------------o
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 0 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+3
+6
+15
+25
+49
+ - - > TIME_FLY: in hours  :  6.16667
+ - - > PRICE: in dolars $ 8.29167
+ - - > SIZE: in hours      9
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 1 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+8
+18
+3
+6
+15
+ - - > TIME_FLY: in hours  :  6.16667
+ - - > PRICE: in dolars $ 9.79167
+ - - > SIZE: in hours      11
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 2 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+9
+19
+11
+21
+15
+25
+ - - > TIME_FLY: in hours  :  6
+ - - > PRICE: in dolars $ 10.5
+ - - > SIZE: in hours      12
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 3 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+18
+3
+6
+15
+25
+ - - > TIME_FLY: in hours  :  6.16667
+ - - > PRICE: in dolars $ 9.79167
+ - - > SIZE: in hours      11
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 4 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+19
+11
+21
+15
+25
+49
+ - - > TIME_FLY: in hours  :  6
+ - - > PRICE: in dolars $ 9.9375
+ - - > SIZE: in hours      11.25
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 5 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+29
+32
+15
+25
+49
+ - - > TIME_FLY: in hours  :  6
+ - - > PRICE: in dolars $ 8.5
+ - - > SIZE: in hours      9.33333
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 6 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+42
+50
+3
+6
+15
+ - - > TIME_FLY: in hours  :  6.16667
+ - - > PRICE: in dolars $ 10.5417
+ - - > SIZE: in hours      12
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 7 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+44
+53
+11
+21
+15
+25
+ - - > TIME_FLY: in hours  :  6
+ - - > PRICE: in dolars $ 9.75
+ - - > SIZE: in hours      11
+0
+0
+1
+0
+0
+1
+0
+1
+1
+0
+1
+0
+0
+0
+1
+0
+0
+1
+1
+0
+1
+0
+0
+0
+1
+0
+0
+0
+1
+0
+0
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1
+0
+1
+0
+0
+0
+0
+1
+1
+0
+0
+1
+0
+0
+0
+0
+0
+17
+0
+0
+4
+0
+0
+4
+0
+1
+1
+0
+3
+0
+0
+0
+8
+0
+0
+2
+2
+0
+3
+0
+0
+0
+6
+0
+0
+0
+1
+0
+0
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1
+0
+1
+0
+0
+0
+0
+3
+1
+0
+0
+1
+0
+0
+0
+0
+0
+0.10user 0.00system 0:00.11elapsed 96%CPU (0avgtext+0avgdata 3380maxresident)k
+0inputs+0outputs (0major+144minor)pagefaults 0swaps

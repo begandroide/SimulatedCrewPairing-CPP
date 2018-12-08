@@ -1,6 +1,7 @@
 #include "nature.hpp"
 #include<iostream>
 #include <string.h>
+
 using namespace std;
 
 const double MIN_BETWEN_FLIGHT = 0.5;
@@ -260,7 +261,7 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
      TODO 
       * (WARNING) active this depending of the instance input
       * 3 to instance 1,
-      * 4 to instance 2,
+      * 5 to instance 2,
       * 6 to instance 3,
       * time can vary depending of objectives of bussines and data study
       */
@@ -300,7 +301,7 @@ void selection_natural(vector<Individual>* individues){
      int MAX_POP = 23;
 
      if(individues->size()>20){
-          while(individues->size()>20){
+          while(individues->size()>30){
                double maxTime = 0;
                int id_borrar = 0;
                 double difTmp = 0.0;

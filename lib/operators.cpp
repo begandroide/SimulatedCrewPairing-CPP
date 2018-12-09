@@ -28,7 +28,7 @@ void Operators::getFitness(Population* all_generation, int num_flights){
 			taked_count.at(chromoTmp.at(j)-1) += 1;
 		} 
 	}
-	cout<<"price total ->"<<price_gen<<endl;
+	//cout<<"price total ->"<<price_gen<<endl;
 
 	int no_taken = 0;
 	for(int i = 0; i < num_flights; i++){
@@ -37,20 +37,20 @@ void Operators::getFitness(Population* all_generation, int num_flights){
 			no_taken++;
 		}
 	}
-	cout<<no_taken<<endl;
+	//cout<<no_taken<<endl;
 
 	int count_repited = 0;
 	for(int i ; i < num_flights; i++){
-		cout<<taked_count.at(i)<<endl;
+	//	cout<<taked_count.at(i)<<endl;
 		if(taked_count.at(i)>1){
 			count_repited += taked_count.at(i) -1; 
 		}
 	}
-	cout<<"repited -> "<<count_repited<<endl;
+	//cout<<"repited -> "<<count_repited<<endl;
 
 	double fitness = 0.0;
 	fitness = price_gen + (no_taken)*10 +(count_repited)*10;
-	cout<<"fitness val -> "<<1/fitness<<endl;
+	//cout<<"fitness val -> "<<1/fitness<<endl;
 	all_generation->fitness = 1/fitness;
 	all_generation->price = price_gen;
 };

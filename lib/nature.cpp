@@ -307,15 +307,15 @@ void selection_natural(vector<Individual>* individues){
                int id_borrar = 0;
                 double difTmp = 0.0;
                for(int i = 0; i<individues->size();i++){
-                    cout<<"~"<<endl;
+                    /*cout<<"~"<<endl;
                     cout<<"Price"<<individues->at(i).getPrice()<<endl;
                     cout<<"Size"<<individues->at(i).getSize()<<endl;
                     cout<<"Time"<<individues->at(i).getTime()<<endl;
-                    difTmp = individues->at(i).getSize() - individues->at(i).getTime();
+               */  difTmp = individues->at(i).getSize() - individues->at(i).getTime();
                     if(difTmp > 4 ){
-                        cout<<difTmp<<endl;
+                      //  cout<<difTmp<<endl;
                          if(maxTime < difTmp){
-                             cout<<"maximo->"<<endl;
+                        //     cout<<"maximo->"<<endl;
                               maxTime = difTmp;
                               id_borrar = i;
                          }
@@ -370,4 +370,6 @@ void Nature::showGeneration(int number_gen){
           cout<<" - - > PRICE: in dolars $ "<<population.at(number_gen).generation.at(z).getPrice()<<endl;
           cout<<" - - > SIZE: in hours      "<<population.at(number_gen).generation.at(z).getSize()<<endl;
      }
+     cout<<" - - > Price Pairing: $  "<<     population.at(number_gen).price<<endl;
+     cout<<" - - > fitness value :  "<<population.at(number_gen).fitness<<endl;
 } 

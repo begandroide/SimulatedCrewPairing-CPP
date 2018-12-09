@@ -4,7 +4,7 @@ SRC=src
 CFLAGS=-g
 LIB=lib
 
-all: individual.o flight.o agency.o nature.o operators.o main.o fly
+all: individual.o flight.o agency.o nature.o operators.o population.o main.o fly
 
 fly:
 	g++ -O3 -o $(OUT)/fly $(OUT)/individual.o $(OUT)/flight.o $(OUT)/agency.o  $(OUT)/nature.o $(OUT)/operators.o $(OUT)/main.o 
@@ -26,6 +26,10 @@ nature.o:
 
 operators.o:
 	g++ -O3 -c $(LIB)/operators.cpp -o $(OUT)/operators.o
+
+population.o:
+	g++ -O3 -c $(LIB)/population.hpp -o $(OUT)/population.o
+
 
 clean:
 	rm -f $(OUT)/*.o

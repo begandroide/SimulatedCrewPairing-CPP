@@ -4,12 +4,14 @@
 #include "agency.hpp"
 #include "individual.hpp"
 #include "operators.hpp"
+#include "population.hpp"
 using namespace std;
 
 class Nature{
 public:
      Agency agency;
-     vector<vector<Individual>> population; // vectors of vectors to generations.
+     vector<Population> population;
+     //vector<vector<Individual>> population; // vectors of vectors to generations.
      Operators operators;
 
     /*---------------------------------Operators---------------------------------*/

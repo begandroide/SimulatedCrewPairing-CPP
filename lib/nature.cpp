@@ -1,4 +1,5 @@
 #include "nature.hpp"
+#include "operators.hpp"
 #include<iostream>
 #include <string.h>
 
@@ -301,7 +302,7 @@ void selection_natural(vector<Individual>* individues){
      int MAX_POP = 23;
 
      if(individues->size()>20){
-          while(individues->size()>30){
+          while(individues->size()>20){
                double maxTime = 0;
                int id_borrar = 0;
                 double difTmp = 0.0;
@@ -334,6 +335,7 @@ void selection_natural(vector<Individual>* individues){
 
 //main function of librarie Nature
 void Nature::makePopulation(int numGeneration, int numIndividuals){
+     Population new_gen = Population();
      vector<Individual>* individues = new vector<Individual>;
      int discover = 1;
      for(int i = 0;i<agency.getFlights().size()-1;i++){
@@ -348,7 +350,9 @@ void Nature::makePopulation(int numGeneration, int numIndividuals){
      //process of selection
      selection_natural(individues);
 
-     population.push_back(*individues);
+     new_gen.generation = *individues;
+     operators.getFitness(&new_gen,agency.getFlights().size());
+     population.push_back(new_gen);
 };
 
 void Nature::showGeneration(int number_gen){
@@ -357,13 +361,13 @@ void Nature::showGeneration(int number_gen){
      cout<<"o--------------------Showing Generation Number "<<number_gen<<" ---------------------o"<<endl;
      cout<<"o---------------------------------------------------------------------o"<<endl;
      cout<<"o---------------------------------------------------------------------o"<<endl;
-     for(int z = 0; z < population.at(number_gen).size();z++){
+     for(int z = 0; z < population.at(number_gen).generation.size();z++){
           cout<<"<~~~~~~~~~~~~~~~~~~~~~~~~individual number "<<to_string(z)<<" ~~~~~~~~~~~~~~~~~~~~~~~~~>"<<endl;
-          for(int x = 0; x < population.at(number_gen).at(z).getChromosomes().size();x++){
-               cout<<population.at(number_gen).at(z).getChromosomes().at(x)<<endl;
+          for(int x = 0; x < population.at(number_gen).generation.at(z).getChromosomes().size();x++){
+               cout<<population.at(number_gen).generation.at(z).getChromosomes().at(x)<<endl;
           }
-          cout<<" - - > TIME_FLY: in hours  :  "<<population.at(number_gen).at(z).getTime()<<endl;
-          cout<<" - - > PRICE: in dolars $ "<<population.at(number_gen).at(z).getPrice()<<endl;
-          cout<<" - - > SIZE: in hours      "<<population.at(number_gen).at(z).getSize()<<endl;
+          cout<<" - - > TIME_FLY: in hours  :  "<<population.at(number_gen).generation.at(z).getTime()<<endl;
+          cout<<" - - > PRICE: in dolars $ "<<population.at(number_gen).generation.at(z).getPrice()<<endl;
+          cout<<" - - > SIZE: in hours      "<<population.at(number_gen).generation.at(z).getSize()<<endl;
      }
 } 

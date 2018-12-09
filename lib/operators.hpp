@@ -7,7 +7,7 @@ using namespace std;
 
 class Operators{
 public:
-     void mutate(Individual*, vector<Flight>*,double);
+     void mutate(Individual*, vector<Flight>,double);
      void selectRoulette(vector<Individual>*);
      void getFitness(Population*,int);
 };

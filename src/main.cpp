@@ -8,6 +8,8 @@ using namespace std;
 #include "../lib/flight.hpp"
 #include "../lib/agency.hpp"
 #include "../lib/nature.hpp"
+#include "../lib/operators.hpp"
+
 
 static Agency agency; //vector to save flights, pushed in order by id;
 static Nature nature;
@@ -34,6 +36,14 @@ int main(int argc, char const *argv[])
      nature.makePopulation(0,30); //0 is generation number zero, 30 experimental resutl by data
      nature.showGeneration(0); //show generation number 0
      
+     srand(123131213);
+     for(int i = 0; i < nature.population.at(0).generation.size();i++){
+          double probability = ((double) rand() / (RAND_MAX)); 
+          //cout<<"Going with prob: "<<probability<<endl;
+          nature.operators.mutate(&nature.population.at(0).generation.at(i),nature.agency.getFlights(),probability);
+
+     }
+
      /*data loaded in vector flights*/
 
      //nature.agency.resume(); //to show all table flights

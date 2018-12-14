@@ -18,6 +18,7 @@ public:
     bool exists(vector<int>,int);
     bool validFlight(vector<int>,int);
     void showGeneration(int);
+    void selection_natural(vector<Individual>* , int);
      /*
      * Function to poblate, depends of version from generation.
      * param1: version of generation
@@ -30,6 +31,9 @@ public:
      * different begin flight
      */
      Individual getGreedyIndividual(int);
+     vector<Individual> getGreedyIndividual(int id_flight_start,vector<int>* usados,int);
+     void compressGeneration(vector<Individual>*);
+     void repare(vector<int>* usados, vector<Individual>*);
      
      /*
      * Function depends of hours of flights, hours of no flights (idle time),

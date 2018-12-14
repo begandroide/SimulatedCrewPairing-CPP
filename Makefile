@@ -4,33 +4,34 @@ SRC=src
 CFLAGS=-g
 LIB=lib
 
-all: individual.o flight.o agency.o nature.o operators.o population.o main.o fly
+all: individual.o flight.o agency.o natureV.o operators.o population.o main.o fly
 
 fly:
-	g++ -O3 -o $(OUT)/fly $(OUT)/individual.o $(OUT)/flight.o $(OUT)/agency.o  $(OUT)/nature.o $(OUT)/operators.o $(OUT)/main.o 
+	g++ -O3 $(CFLAGS) -o $(OUT)/fly $(OUT)/individual.o $(OUT)/flight.o $(OUT)/agency.o  $(OUT)/natureV.o $(OUT)/operators.o $(OUT)/main.o 
 
 main.o:
-	g++ -O3 -c $(SRC)/main.cpp -o $(OUT)/main.o
+	g++ -O3 $(CFLAGS) -c $(SRC)/main.cpp -o $(OUT)/main.o
 
 individual.o:
-	g++ -O3 -c $(LIB)/individual.cpp -o $(OUT)/individual.o
+	g++ -O3 $(CFLAGS) -c $(LIB)/individual.cpp -o $(OUT)/individual.o
 
 flight.o:
-	g++ -O3 -c $(LIB)/flight.cpp -o $(OUT)/flight.o
+	g++ -O3 $(CFLAGS) -c $(LIB)/flight.cpp -o $(OUT)/flight.o
 
 agency.o:
-	g++ -O3 -c $(LIB)/agency.cpp -o $(OUT)/agency.o
+	g++ -O3 $(CFLAGS) -c $(LIB)/agency.cpp -o $(OUT)/agency.o
 
-nature.o:
-	g++ -O3 -c $(LIB)/nature.cpp -o $(OUT)/nature.o
+natureV.o:
+	g++ -O3 $(CFLAGS) -c $(LIB)/natureV.cpp -o $(OUT)/natureV.o
 
 operators.o:
-	g++ -O3 -c $(LIB)/operators.cpp -o $(OUT)/operators.o
+	g++ -O3 $(CFLAGS) -c $(LIB)/operators.cpp -o $(OUT)/operators.o
 
 population.o:
-	g++ -O3 -c $(LIB)/population.hpp -o $(OUT)/population.o
+	g++ -O3 $(CFLAGS) -c $(LIB)/population.hpp -o $(OUT)/population.o
 
-
+run:
+	./out/fly ./instances/instancia.csv
 clean:
 	rm -f $(OUT)/*.o
 	rm -f $()

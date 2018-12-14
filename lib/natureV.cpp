@@ -257,14 +257,14 @@ void Nature::makePopulation(int numGeneration, int numIndividuals){
 		  }*/
 		  clock_gettime(CLOCK_MONOTONIC, &ts);
 		  srand((time_t) ts.tv_nsec);
-		  ant:;
+	/*	  ant:;
 		  int probability = ( std::rand() % ( agency.getFlights().size() ) );
 		  if(probability == 0) goto ant;
-		 /* while(probability > agency.getFlights().size()){
+		  while(probability > agency.getFlights().size()){
 			clock_gettime(CLOCK_MONOTONIC, &ts);
 			srand((time_t) ts.tv_nsec);
-			probability = ( rand() % 100);      
-		  }*/
+			probability = ( rand() % 100);  }
+	*/
 		  vector<Individual> indi = getGreedyIndividual(i+1,&usados,0);
 		 // vector<Individual> indi = getGreedyIndividual(probability,&usados,0);
 		  if(indi.size() > 0){

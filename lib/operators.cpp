@@ -78,7 +78,7 @@ double getIdleTime_two (string hora_one,string hora_two){
      return time_dif;
 }
 
-Individual Operators::mutate(Individual* individual, vector<Flight> flights,double prob_mutation){
+Individual Operators::mutate(Individual individual, vector<Flight> flights,double prob_mutation){
 	cout<<"mutate with prob -> "<<prob_mutation*100<<endl;
 	//prefieres explorar o explotar---- depende para la probabilidad
 	//explotar tipo hill climbing
@@ -89,38 +89,42 @@ Individual Operators::mutate(Individual* individual, vector<Flight> flights,doub
 	clock_gettime(CLOCK_MONOTONIC, &ts);
 	/* using nano-seconds instead of seconds */
 	srand((time_t)ts.tv_nsec);
-	int val_rand =  rand()%10;
+	int val_rand =  rand()%(10-4 +1);
 	printf ("Random fast seeded: %d\n", val_rand);
-	while(val_rand>=individual->getChromosomes().size() || val_rand == 0 ){
+	if(individual.getChromosomes().size() == 1){
+		return individual;
+	}
+	while(val_rand>=individual.getChromosomes().size() || val_rand == 0 ){
 		clock_gettime(CLOCK_MONOTONIC, &ts);
 		/* using nano-seconds instead of seconds */
 		srand((time_t)ts.tv_nsec);
-		val_rand = rand()%10;
+		val_rand = rand()%(10-4 +1);
 		printf ("Random 2 fast seeded: %d\n", val_rand);	
 	}
 	//val_rand has the position of chromosome to mutate. if not its best, go for other not used previously
 	
 	//get values of input individual to compare.
-	double timeIndividual_init = individual->getTime();
-	double priceIndividual_init = individual->getPrice();
-	double sizeIndividual_init = individual->getSize();
-	int number_cobert_fligths_init = individual->getChromosomes().size();
+	double timeIndividual_init = individual.getTime();
+	double priceIndividual_init = individual.getPrice();
+	double sizeIndividual_init = individual.getSize();
+	int number_cobert_fligths_init = individual.getChromosomes().size();
 
 	//make a copy of the individual to modify and compare if its better or not.
 	Individual* soon_individual = (Individual*)malloc(sizeof(Individual));
-	soon_individual = (Individual*) memcpy(soon_individual,individual,sizeof(Individual));
+	soon_individual = (Individual*) memcpy(soon_individual,&individual,sizeof(Individual));
 	//soon individual to know if the created individual its best that the father. in terms of price and size
 	Flight* fligth_prev = (Flight*)malloc(sizeof(Flight));
 	Flight* flight_delete = (Flight*)malloc(sizeof(Flight));
 	Flight* flight_after = (Flight*)malloc(sizeof(Flight));
-	flight_delete = &flights.at(individual->getChromosomes().at(val_rand-1)-1);
-	if(val_rand == 1){
-		flight_after = &flights.at(individual->getChromosomes().at(val_rand)-1);	
+	flight_delete = &flights.at(individual.getChromosomes().at(val_rand)-1);
+	if(val_rand == soon_individual->getChromosomes().size()) val_rand--;
+	if(val_rand == 0){
+		flight_after = &flights.at(individual.getChromosomes().at(val_rand)-1);
 	}else if(val_rand == soon_individual->getChromosomes().size()-1){
-		fligth_prev = &flights.at(individual->getChromosomes().at(val_rand-2)-1);
+		fligth_prev = &flights.at(individual.getChromosomes().at(val_rand-1)-1);
 	}else{
-		fligth_prev = &flights.at(individual->getChromosomes().at(val_rand-2)-1);
-		flight_after = &flights.at(individual->getChromosomes().at(val_rand)-1);
+		fligth_prev = &flights.at(individual.getChromosomes().at(val_rand-1)-1);
+		flight_after = &flights.at(individual.getChromosomes().at(val_rand+1)-1);
 	}
 /*		cout<<"DELETE"<<endl;
 	cout<<flight_delete->id<<endl;
@@ -133,7 +137,7 @@ Individual Operators::mutate(Individual* individual, vector<Flight> flights,doub
 	double new_size = soon_individual->getSize();
 	double new_time = soon_individual->getTime();
 	
-	if(val_rand == 1){
+	if(val_rand == 0){
 		//	cout<<"~"<<endl;
 			//getting flight and idle time
 			if(flight_after->horaInicio.compare("")==0){
@@ -205,7 +209,7 @@ Individual Operators::mutate(Individual* individual, vector<Flight> flights,doub
 										return *soon_individual;
 									}else{
 										cout<<"desechado"<<endl;
-										return *individual;
+										return individual;
 									}
 								}else{
 									//muto igual
@@ -283,7 +287,7 @@ Individual Operators::mutate(Individual* individual, vector<Flight> flights,doub
 										//mejor
 
 										vector<int> chromos = soon_individual->getChromosomes();//.at(val_rand-1) = flights.at(i).id;
-										chromos.at(val_rand-1) = flights.at(i).id;
+										chromos.at(val_rand) = flights.at(i).id;
 										soon_individual->setChromosome(chromos);
 //										soon_individual->getChromosomes().at(val_rand-1) = flights.at(i).id;
 										soon_individual->setPrice( tmpPrice );
@@ -293,13 +297,13 @@ Individual Operators::mutate(Individual* individual, vector<Flight> flights,doub
 										return *soon_individual;
 									}else{
 										cout<<"desechado"<<endl;
-										return *individual;
+										return individual;
 									}
 								}else{
 									//muto igual
 
 									vector<int> chromos = soon_individual->getChromosomes();//.at(val_rand-1) = flights.at(i).id;
-									chromos.at(val_rand-1) = flights.at(i).id;
+									chromos.at(val_rand) = flights.at(i).id;
 									soon_individual->setChromosome(chromos);
 									//									soon_individual->getChromosomes().at(val_rand-1) = flights.at(i).id;
 									soon_individual->setPrice( tmpPrice );
@@ -388,12 +392,12 @@ Individual Operators::mutate(Individual* individual, vector<Flight> flights,doub
 							//si es mejor lo cambiamos
 							//mejor es si la diferencia entre size y time es menor;
 							//tambien es mejor si el precio es menor (definitivamente)
-							if(prob_mutation*100<60){
+							if(prob_mutation*100<20){
 								if( (tmpSize - tmpTime) < (sizeIndividual_init - timeIndividual_init) || tmpPrice < priceIndividual_init ){
 									//mejor
 
 									vector<int> chromos = soon_individual->getChromosomes();//.at(val_rand-1) = flights.at(i).id;
-									chromos.at(val_rand-1) = flights.at(i).id;
+									chromos.at(val_rand) = flights.at(i).id;
 									soon_individual->setChromosome(chromos);
 //									soon_individual->getChromosomes().at(val_rand-1) = flights.at(i).id;
 									soon_individual->setPrice( tmpPrice );
@@ -407,7 +411,7 @@ Individual Operators::mutate(Individual* individual, vector<Flight> flights,doub
 							}else{
 
 								vector<int> chromos = soon_individual->getChromosomes();//.at(val_rand-1) = flights.at(i).id;
-								chromos.at(val_rand-1) = flights.at(i).id;
+								chromos.at(val_rand) = flights.at(i).id;
 								soon_individual->setChromosome(chromos);
 //								soon_individual->getChromosomes().at(val_rand-1) = flights.at(i).id;
 								soon_individual->setPrice( tmpPrice );
@@ -470,7 +474,7 @@ void Operators::getFitness(Population* all_generation, int num_flights){
 	//cout<<"repited -> "<<count_repited<<endl;
 
 	double fitness = 0.0;
-	fitness = price_gen + (no_taken)*10 +(count_repited)*10;
+	fitness = price_gen + (no_taken)*100;
 	//cout<<"fitness val -> "<<1/fitness<<endl;
 	all_generation->fitness = 1/fitness;
 	all_generation->price = price_gen;

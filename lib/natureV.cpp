@@ -189,7 +189,7 @@ void Nature::compressGeneration(vector<Individual>* generation) {
 					string aero_fin_first = agency.getFlights().at(
 							pivoteChromosomes.at(pivoteChromosomes.size() - 1) - 1).aeropuerto_fin;
 					string aero_begin_last = agency.getFlights().at(tmpChromosomes.at(0) - 1).aeropuerto_init;
-					bool valid = validFlight(pivoteChromosomes, agency.getFlights().at(tmpChromosomes.at(0) - 1).id);
+					bool valid = validFlight(pivoteChromosomes, tmpChromosomes.at(0)-1);
 					if (aero_fin_first.compare(aero_begin_last) == 0 && valid && used.at(j) != 1) {
 						// checkear si respeta reglas de tiempo
 						double idleTmp = getIdleTime(
@@ -257,16 +257,16 @@ void Nature::makePopulation(int numGeneration, int numIndividuals){
 		  }*/
 		  clock_gettime(CLOCK_MONOTONIC, &ts);
 		  srand((time_t) ts.tv_nsec);
-	/*	  ant:;
+		  ant:;
 		  int probability = ( std::rand() % ( agency.getFlights().size() ) );
 		  if(probability == 0) goto ant;
 		  while(probability > agency.getFlights().size()){
 			clock_gettime(CLOCK_MONOTONIC, &ts);
 			srand((time_t) ts.tv_nsec);
-			probability = ( rand() % 100);  }
-	*/
-		  vector<Individual> indi = getGreedyIndividual(i+1,&usados,0);
-		 // vector<Individual> indi = getGreedyIndividual(probability,&usados,0);
+			probability = ( rand() % 100);
+		  }
+		  //vector<Individual> indi = getGreedyIndividual(i+1,&usados,0);
+		  vector<Individual> indi = getGreedyIndividual(probability,&usados,0);
 		  if(indi.size() > 0){
 			  for(int j = 0; j < indi.size();j++){
 				  individues->push_back(indi.at(j)); //push individue
@@ -298,9 +298,9 @@ void Nature::makePopulation(int numGeneration, int numIndividuals){
 	 popu.generation = new_gen_mutata;
 	 population.push_back(popu);
 	*/
-	 showGeneration(0);
+//	 showGeneration(0);
   //  showGeneration(1);
-	exit(2);
+//	exit(2);
 
 };
 

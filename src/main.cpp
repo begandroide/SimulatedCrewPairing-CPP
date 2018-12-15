@@ -36,28 +36,29 @@ int main(int argc, char const *argv[]) {
 
      nature.makePopulation(0, 20); //0 is generation number zero, 30 experimental resutl by data
      nature.showGeneration(0); //show generation number 0
-     exit(2);
      struct timespec ts;
 
      // for(int i = 0; i < 1;i++){
      //first mutation generation
      double max_fitness = 0.0;
      int id = -1;
-     for (int j = 1; j < 10; j++) {
+     for (int j = 1; j < 100; j++) {
           Population gen_mutate = Population();
-          for (int i = 0; i < nature.population.at(0).generation.size(); i++) {
+          for (int i = 0; i < nature.population.at(j-1).generation.size(); i++) {
                clock_gettime(CLOCK_MONOTONIC, &ts);
                /* using nano-seconds instead of seconds */
                srand((time_t) ts.tv_nsec);
                double probability = ((double) rand() / (RAND_MAX));
                //cout<<"Going with prob: "<<probability<<endl;
                Individual indTmp = Individual(0);
-               indTmp = nature.operators.mutate(&nature.population.at(j - 1).generation.at(i),
+               indTmp = nature.operators.mutate(nature.population.at(j - 1).generation.at(i),
                                                 nature.agency.getFlights(), probability);
                gen_mutate.generation.push_back(indTmp);
                //must calculate price and fitness of population mutated
           }
           cout << gen_mutate.generation.size() << endl;
+          nature.compressGeneration(&gen_mutate.generation);
+          //TODO Repair generation
           nature.operators.getFitness(&gen_mutate, nature.agency.getFlights().size());
           if (gen_mutate.fitness > max_fitness) {
                max_fitness = gen_mutate.fitness;
@@ -68,8 +69,13 @@ int main(int argc, char const *argv[]) {
           for (int z = 0; z < nature.agency.getFlights().size(); z++) {
                flights_taked.push_back(0);
           }
-
-          cout << "EHEH" << endl;
+          nature.population.push_back(gen_mutate);
+     }
+     nature.showGeneration(id);
+            exit(2);
+          return 1;
+}
+ /*         cout << "EHEH" << endl;
           for (int a = 10; a < (gen_mutate.generation.size()); a++) {
                Individual indTmp = gen_mutate.generation.at(a);
                //iteramos en sus chromosomes
@@ -124,7 +130,7 @@ int main(int argc, char const *argv[]) {
                                    }
                               }
                               break;
-                         }*/
+                         }
                          cout << "chorm -> " << chromosome_tmp.at(b) << "id-> " << b << " individual-> " << a << endl;
                     }
                    ghelp:;
@@ -163,9 +169,7 @@ int main(int argc, char const *argv[]) {
 
      //nature.agency.resume(); //to show all table flights
      //nature.agency.showAirports();
-     //test();
-     return 0;
-}
+     //test(); */
 
 void test(){
     //Flight vuelo(1,"cppo","stgo","10:10","11:20");

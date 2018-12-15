@@ -36,6 +36,7 @@ int main(int argc, char const *argv[]) {
 
      nature.makePopulation(0, 20); //0 is generation number zero, 30 experimental resutl by data
      nature.showGeneration(0); //show generation number 0
+     exit(100);
      struct timespec ts;
 
      // for(int i = 0; i < 1;i++){

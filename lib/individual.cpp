@@ -47,6 +47,12 @@ void Individual::setPrice(float _price)
      price = _price;
 };
 
+void Individual::setTime(double _time)
+{
+     time = _time;
+};
+
+
 void Individual::setFitness(float _fitness)
 {
      fitness = _fitness;

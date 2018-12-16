@@ -1,6 +1,8 @@
 #include "nature.hpp"
+#include "operators.hpp"
 #include<iostream>
 #include <string.h>
+
 using namespace std;
 
 const double MIN_BETWEN_FLIGHT = 0.5;
@@ -67,6 +69,10 @@ int compareHour (string hora_one,string hora_two){
                         }else{
                             return 0;
                         }
+                    }
+               }else{
+                    if(hourDif == 0 && min_init==min_fin){
+                         return 0;
                     }
                }
                if(min_init == 0 &&  min_fin == 0){
@@ -260,12 +266,12 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
      TODO 
       * (WARNING) active this depending of the instance input
       * 3 to instance 1,
-      * 4 to instance 2,
+      * 5 to instance 2,
       * 6 to instance 3,
       * time can vary depending of objectives of bussines and data study
       */
-     if(time > MAX_TIME_FLIGHT || time<6){
-          if(time<6){
+     if(time > MAX_TIME_FLIGHT || time<3){
+          if(time<3){
               chromosomes.clear();
               return Individual(size, chromosomes);
           }else{
@@ -296,8 +302,42 @@ Individual Nature::getGreedyIndividual(int id_flight_start){
      return Individual(size, time,price,0,chromosomes);
 };
 
-void selection_natural(vector<Individual>* individues){
-     int MAX_POP = 23;
+void Nature::selection_natural(vector<Individual>* individues, int num_flights){
+     vector<int> flights = vector<int>();
+     for(int i = 0; i < num_flights;i++){
+          flights.push_back(0);
+     }
+
+     for(int i = 0; i < individues->size();i++){
+          vector<int> tmpChromosomes = individues->at(i).getChromosomes();
+          for(int j = 0; j < tmpChromosomes.size();j++){
+               flights.at(tmpChromosomes.at(j)-1) += 1;
+               if(flights.at(tmpChromosomes.at(j)-1) > 1){
+                    //problema, debemos buscar otra solucion.
+                    //buscamos uno previamente no ocupado
+                    for(int k = 0; k < num_flights;k++){
+                         if(flights.at(k) == 0){
+                              int id_objetivo = k;
+                              //id objetivo debe ser puesto en la solucion actual; en el individuo con choque
+                              if(agency.getFlights().at(id_objetivo).aeropuerto_init.compare(BASE1) == 0 || agency.getFlights().at(id_objetivo).aeropuerto_init.compare(BASE2) == 0  ){
+                                   cout<<"si es base"<<endl;
+                                   cout<<id_objetivo<<endl;
+                                   individues->at(i) = getGreedyIndividual(id_objetivo);
+                                   break;
+                              } else{
+                                   cout<<"no es base"<<endl;
+                              }
+                         }
+                    }
+               }
+          }
+     }
+
+     for(int i = 0; i < num_flights;i++){
+         cout<<"i-> "<<i+1<<flights.at(i)<<endl;
+     }
+     exit(2);
+
 
      if(individues->size()>20){
           while(individues->size()>20){
@@ -305,15 +345,15 @@ void selection_natural(vector<Individual>* individues){
                int id_borrar = 0;
                 double difTmp = 0.0;
                for(int i = 0; i<individues->size();i++){
-                    cout<<"~"<<endl;
+                    /*cout<<"~"<<endl;
                     cout<<"Price"<<individues->at(i).getPrice()<<endl;
                     cout<<"Size"<<individues->at(i).getSize()<<endl;
                     cout<<"Time"<<individues->at(i).getTime()<<endl;
-                    difTmp = individues->at(i).getSize() - individues->at(i).getTime();
-                    if(difTmp > 4 ){
-                        cout<<difTmp<<endl;
+               */  difTmp = individues->at(i).getSize() - individues->at(i).getTime();
+                    if(difTmp > 3 ){
+                      //  cout<<difTmp<<endl;
                          if(maxTime < difTmp){
-                             cout<<"maximo->"<<endl;
+                        //     cout<<"maximo->"<<endl;
                               maxTime = difTmp;
                               id_borrar = i;
                          }
@@ -333,21 +373,35 @@ void selection_natural(vector<Individual>* individues){
 
 //main function of librarie Nature
 void Nature::makePopulation(int numGeneration, int numIndividuals){
+     Population new_gen = Population();
      vector<Individual>* individues = new vector<Individual>;
      int discover = 1;
      for(int i = 0;i<agency.getFlights().size()-1;i++){
           if(individues->size() == numIndividuals){
                break;
           }
-          Individual indi = getGreedyIndividual(i+1);
+          struct timespec ts;
+          clock_gettime(CLOCK_MONOTONIC, &ts);
+               /* using nano-seconds instead of seconds */
+          //srand((time_t) ts.tv_nsec);
+          double probability =  rand() % 100;
+          if(probability>agency.getFlights().size()){
+               while(probability>=agency.getFlights().size()){
+                    cout<<"ouch"<<endl;
+                    probability =  rand() % 100;
+               }
+          }
+          Individual indi = getGreedyIndividual(probability);
           if(indi.getChromosomes().size() > 0){
                individues->push_back(indi); //push individue
           }
      }
      //process of selection
-     selection_natural(individues);
+     selection_natural(individues, agency.getFlights().size());
 
-     population.push_back(*individues);
+     new_gen.generation = *individues;
+     operators.getFitness(&new_gen,agency.getFlights().size());
+     population.push_back(new_gen);
 };
 
 void Nature::showGeneration(int number_gen){
@@ -356,13 +410,15 @@ void Nature::showGeneration(int number_gen){
      cout<<"o--------------------Showing Generation Number "<<number_gen<<" ---------------------o"<<endl;
      cout<<"o---------------------------------------------------------------------o"<<endl;
      cout<<"o---------------------------------------------------------------------o"<<endl;
-     for(int z = 0; z < population.at(number_gen).size();z++){
+     for(int z = 0; z < population.at(number_gen).generation.size();z++){
           cout<<"<~~~~~~~~~~~~~~~~~~~~~~~~individual number "<<to_string(z)<<" ~~~~~~~~~~~~~~~~~~~~~~~~~>"<<endl;
-          for(int x = 0; x < population.at(number_gen).at(z).getChromosomes().size();x++){
-               cout<<population.at(number_gen).at(z).getChromosomes().at(x)<<endl;
+          for(int x = 0; x < population.at(number_gen).generation.at(z).getChromosomes().size();x++){
+               cout<<population.at(number_gen).generation.at(z).getChromosomes().at(x)<<endl;
           }
-          cout<<" - - > TIME_FLY: in hours  :  "<<population.at(number_gen).at(z).getTime()<<endl;
-          cout<<" - - > PRICE: in dolars $ "<<population.at(number_gen).at(z).getPrice()<<endl;
-          cout<<" - - > SIZE: in hours      "<<population.at(number_gen).at(z).getSize()<<endl;
+          cout<<" - - > TIME_FLY: in hours  :  "<<population.at(number_gen).generation.at(z).getTime()<<endl;
+          cout<<" - - > PRICE: in dolars $ "<<population.at(number_gen).generation.at(z).getPrice()<<endl;
+          cout<<" - - > SIZE: in hours      "<<population.at(number_gen).generation.at(z).getSize()<<endl;
      }
+     cout<<" - - > Price Pairing: $  "<<     population.at(number_gen).price<<endl;
+     cout<<" - - > fitness value :  "<<population.at(number_gen).fitness<<endl;
 } 

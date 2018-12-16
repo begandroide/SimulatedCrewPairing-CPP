@@ -1,0 +1,40 @@
+g++ -O3 -o out/fly out/individual.o out/flight.o out/agency.o  out/nature.o out/operators.o out/main.o 
+/usr/bin/time out/fly instances/instancia.csv
+Vuelos satisfactoriamente cargados!
+Number of Individual per generation not given, set default: 23
+o---------------------------------------------------------------------o
+o---------------------------------------------------------------------o
+o--------------------Showing Generation Number 0 ---------------------o
+o---------------------------------------------------------------------o
+o---------------------------------------------------------------------o
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 0 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+8
+11
+14
+18
+28
+ - - > TIME_FLY: in hours  :  6.16667
+ - - > PRICE: in dolars $ 8.875
+ - - > SIZE: in hours      9.91667
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 1 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+29
+12
+8
+11
+14
+ - - > TIME_FLY: in hours  :  6.91667
+ - - > PRICE: in dolars $ 10.4375
+ - - > SIZE: in hours      11.8333
+<~~~~~~~~~~~~~~~~~~~~~~~~individual number 2 ~~~~~~~~~~~~~~~~~~~~~~~~~>
+32
+8
+11
+14
+18
+ - - > TIME_FLY: in hours  :  6.16667
+ - - > PRICE: in dolars $ 10.1667
+ - - > SIZE: in hours      11.5
+ - - > Price Pairing: $  29.4792
+ - - > fitness value :  0.00557168
+0.03user 0.00system 0:00.03elapsed 94%CPU (0avgtext+0avgdata 3420maxresident)k
+0inputs+0outputs (0major+144minor)pagefaults 0swaps

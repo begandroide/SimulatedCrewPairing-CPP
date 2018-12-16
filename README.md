@@ -8,7 +8,9 @@ Para dejar en logs los output con evaluacion de tiempo:
 ## TODO Section
 - [x] Generation Initial.
 - [x] Selection Function.
-- [ ] Fitness function. !Dudas!
+- [x] Fitness function. 
+ - !Dudas! comenzando (cant. de vuelos tomados, cantidad de vuelos repetidos) ¡Pensar en fitness Function!.
+ - Fitness seteada. a medida de evolucion del programa setear estos valores dependiendo de la data.
 - [ ] Mutation. Profe recomendó 2 tipos, con probabilidades distintas de aparición; una que acepte cosas mejores que la solucion actual y otro que seleccione sin importar si es mejor o no.
 - [ ] Elitism.
 

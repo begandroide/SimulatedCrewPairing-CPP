@@ -1,75 +1,94 @@
-g++ -O3 -o out/fly out/individual.o out/flight.o out/agency.o  out/nature.o out/main.o 
+g++ -O3 -g -o out/fly out/individual.o out/flight.o out/agency.o  out/natureV.o out/operators.o out/main.o 
 /usr/bin/time out/fly instances/instancia.csv
 Vuelos satisfactoriamente cargados!
 Number of Individual per generation not given, set default: 23
------individual number -> 1
-1
-32
-8
-11
-14
-18
-28
------individual number -> 2
-3
-33
-21
-5
-37
-27
------individual number -> 3
-9
-12
-8
-11
-14
-18
-28
------individual number -> 4
-27
------individual number -> 5
-7
-8
-11
-14
-18
-28
------individual number -> 6
-21
-5
-37
-27
------individual number -> 7
-4
-7
-8
-11
-14
-18
-28
------individual number -> 8
-12
-8
-11
-14
-18
-28
------individual number -> 9
+1 0 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 
 2
+2 3 
+2 3 
+size ->5.33333
+price ->4.5625
+time ->2.25
 3
-33
-21
-5
-37
-27
------individual number -> 10
+preparacion
+2-3-
+2 3 
+size ->5.33333
+price ->4.5625
+time ->2.25
 6
-10
-16
-20
-30
-5
-37
-27
-0.03user 0.00system 0:00.03elapsed 100%CPU (0avgtext+0avgdata 3312maxresident)k
-0inputs+0outputs (0major+139minor)pagefaults 0swaps
+preparacion
+2-6-
+2 6 
+size ->4
+price ->3.5
+time ->2
+29
+29 12 
+29 12 
+size ->4.25
+price ->3.9375
+time ->3
+1 3 2 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+6
+preparacion
+2-6-
+2 6 
+size ->4
+price ->3.5
+time ->2
+9
+9 12 
+9 12 
+size ->3
+price ->2.75
+time ->2
+1 2 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+6
+preparacion
+2-6-
+2 6 
+size ->4
+price ->3.5
+time ->2
+9
+9 12 
+9 12 
+size ->3
+price ->2.75
+time ->2
+1 2 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+6
+preparacion
+2-6-
+2 6 
+size ->4
+price ->3.5
+time ->2
+9
+9 12 
+9 12 
+size ->3
+price ->2.75
+time ->2
+1 2 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+o---------------------------------------------------------------------o
+o---------------------------------------------------------------------o
+o--------------------Showing all population---------------------o
+o---------------------------------------------------------------------o
+o---------------------------------------------------------------------o
+35 23 37 ||26 36 28 ||10 16 20 30 5 38 ||33 21 22 27 ||25 24 ||4 7 8 11 ||32 15 19 14 18 ||1 ||9 12 17 34 ||31 13 ||2 3 ||2 6 ||29 12 ||price -> 75.75
+
+33 21 5 38 28 ||1 32 8 11 ||10 16 20 30 22 27 ||4 7 15 19 ||31 13 35 23 ||25 24 ||26 36 ||14 18 ||29 12 17 34 ||37 ||2 3 ||2 6 ||9 12 ||price -> 74.25
+
+30 5 38 28 ||33 23 37 27 ||13 35 21 22 ||29 12 8 11 ||4 7 15 19 ||14 18 ||25 24 ||36 ||31 10 16 20 34 26 ||1 32 17 ||2 3 ||2 6 ||9 12 ||price -> 73
+
+17 34 14 18 ||13 35 20 30 5 38 ||26 36 ||37 27 ||25 24 28 ||1 32 8 11 ||4 7 15 19 21 22 ||29 12 ||2 3 33 23 ||31 10 16 ||2 6 ||9 12 ||price -> 74.25
+
+Command exited with non-zero status 100
+0.05user 0.00system 0:00.05elapsed 100%CPU (0avgtext+0avgdata 3524maxresident)k
+0inputs+0outputs (0major+151minor)pagefaults 0swaps
+make: *** [Makefile:39: test1] Error 100

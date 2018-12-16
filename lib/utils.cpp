@@ -140,6 +140,21 @@ double getIdleTime (string hora_one,string hora_two){
     double min_init = stoi(min_inicio_two)/60.0;
     double min_fin = stoi(min_termino_one)/60.0;
 
+    if(hour_inicio == 0){
+        hour_inicio =24;
+    } else if(hour_inicio == 1){
+        hour_inicio = 25;
+    } else if(hour_inicio == 2){
+        hour_inicio = 26;
+    }
+
+    if(hour_fin == 0){
+        hour_fin =24;
+    } else if(hour_fin == 1){
+        hour_fin = 25;
+    } else if(hour_fin == 2){
+        hour_fin = 26;
+    }
     hour_fin += min_fin;
     hour_inicio += min_init;
 	double time_dif = hour_inicio - hour_fin;

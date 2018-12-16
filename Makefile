@@ -30,8 +30,7 @@ operators.o:
 population.o:
 	g++ -O3 $(CFLAGS) -c $(LIB)/population.hpp -o $(OUT)/population.o
 
-run:
-	./out/fly ./instances/instancia.csv
+
 clean:
 	rm -f $(OUT)/*.o
 	rm -f $()

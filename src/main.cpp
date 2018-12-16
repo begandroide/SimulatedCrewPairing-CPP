@@ -9,6 +9,7 @@ using namespace std;
 #include "../lib/agency.hpp"
 #include "../lib/nature.hpp"
 #include "../lib/operators.hpp"
+#include "../lib/duty.cpp"
 
 const string BASE1 = "IST";
 const string BASE2 = "ANK";
@@ -33,9 +34,17 @@ int main(int argc, char const *argv[]) {
           cout << "error(1)" << endl;
           exit(0);
      }
+     int count = 0;
+     while(count < 4){
+          nature.makePopulation(count, 20); //0 is generation number zero, 30 experimental resutl by data
+          count++;
+     }
 
-     nature.makePopulation(0, 20); //0 is generation number zero, 30 experimental resutl by data
-     nature.showGeneration(0); //show generation number 0
+     /*nature.showGeneration(0); //show generation number 0
+     nature.showGeneration(1);
+     nature.showGeneration(2);
+     nature.showGeneration(3);*/
+     nature.showResume();
      exit(100);
      struct timespec ts;
 

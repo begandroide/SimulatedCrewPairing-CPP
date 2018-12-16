@@ -18,6 +18,7 @@ public:
     bool exists(vector<int>,int);
     bool validFlight(vector<int>,int);
     void showGeneration(int);
+    void showResume();
     void selection_natural(vector<Individual>* , int);
      /*
      * Function to poblate, depends of version from generation.

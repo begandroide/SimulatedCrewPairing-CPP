@@ -54,10 +54,11 @@ int main(int argc, char const *argv[]) {
           vector<Population> new_generation = vector<Population>();
           new_generation.push_back(bestSolution);
           //first select
-          //second mutate
-          //third repare
-          //exit condition if prev solution its fine
-          //else elitism
+          vector<Population> victimsToTransform = nature.operators.selectRouletteWheel(prev_generation);
+          //TODO second mutate
+          //TODO third repare
+          //TODO exit condition if prev solution its fine
+          //TODO else elitism
           //Population bestSolution = nature.operators.elitism(new_generation);     
      }
      exit(100);

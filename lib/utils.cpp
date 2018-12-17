@@ -47,7 +47,7 @@ int compareHourV2 (string hora_one,string hora_two){
         return 0;
     }
 }
-
+/*
 int compareHour (string hora_one,string hora_two){
     int hourDif, minDif;
 	string hora_termino_one = string();
@@ -121,7 +121,7 @@ int compareHour (string hora_one,string hora_two){
      }else{
           return 0;
      }
-}
+}*/
 
 double getIdleTime (string hora_one,string hora_two){
     double hourDif;

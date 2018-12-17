@@ -13,6 +13,7 @@ public:
      void selectRoulette(vector<Individual>*);
      void getFitness(Population*,int);
      int repare(Individual* , int , vector<Flight>);
+     Population elitism(vector<Population>);
 };
 
 #endif

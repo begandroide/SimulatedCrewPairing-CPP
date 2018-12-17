@@ -35,18 +35,37 @@ int main(int argc, char const *argv[]) {
           exit(0);
      }
      int count = 0;
+     vector<Population> tmpSolutions = vector<Population>();
      while(count < 20){
-          nature.makePopulation(count, 20); //0 is generation number zero, 30 experimental resutl by data
+          tmpSolutions.push_back( nature.makePopulation(count, 20) ); //0 is generation number zero, 30 experimental resutl by data
           count++;
      }
+     nature.population.push_back(tmpSolutions);
      /*nature.showGeneration(0); //show generation number 0
      nature.showGeneration(1);
      nature.showGeneration(2);
      nature.showGeneration(3);*/
      nature.showResume();
-     Population bestSolution = nature.operators.elitism(nature.population);
+     Population bestSolution = nature.operators.elitism(nature.population.at(0));
      cout<<bestSolution.fitness<<endl;
+     for(int iterations = 0; iterations < 1 ; iterations++){ //por cada generacion que desee iterar
+          vector<Population> prev_generation = nature.population.at(iterations);
+          
+          vector<Population> new_generation = vector<Population>();
+          new_generation.push_back(bestSolution);
+          //first select
+          vector<Population> victimsToTransform = nature.operators.selectRouletteWheel(prev_generation);
+          //TODO second mutate
+          //TODO third repare
+          //TODO exit condition if prev solution its fine
+          //TODO else elitism
+          //Population bestSolution = nature.operators.elitism(new_generation);     
+     }
      exit(100);
+}
+ /*         cout << "EHEH" << endl;
+          for (int a = 10; a < (gen_mutate.generation.size()); a++) {
+               Individual indTmp = gen_mutate.generation.at(a);
      struct timespec ts;
 
      // for(int i = 0; i < 1;i++){
@@ -57,7 +76,7 @@ int main(int argc, char const *argv[]) {
           Population gen_mutate = Population();
           for (int i = 0; i < nature.population.at(j-1).generation.size(); i++) {
                clock_gettime(CLOCK_MONOTONIC, &ts);
-               /* using nano-seconds instead of seconds */
+               /* using nano-seconds instead of seconds 
                srand((time_t) ts.tv_nsec);
                double probability = ((double) rand() / (RAND_MAX));
                //cout<<"Going with prob: "<<probability<<endl;
@@ -85,10 +104,6 @@ int main(int argc, char const *argv[]) {
      nature.showGeneration(id);
             exit(2);
           return 1;
-}
- /*         cout << "EHEH" << endl;
-          for (int a = 10; a < (gen_mutate.generation.size()); a++) {
-               Individual indTmp = gen_mutate.generation.at(a);
                //iteramos en sus chromosomes
                vector<int> chromosome_tmp = indTmp.getChromosomes();
                for (int b = 0; b < chromosome_tmp.size(); b++) {

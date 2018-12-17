@@ -10,7 +10,7 @@ using namespace std;
 class Operators{
 public:
      Individual mutate(Individual, vector<Flight>,double);
-     void selectRoulette(vector<Individual>*);
+     vector<Population> selectRouletteWheel(vector<Population>);
      void getFitness(Population*,int);
      int repare(Individual* , int , vector<Flight>);
      Population elitism(vector<Population>);

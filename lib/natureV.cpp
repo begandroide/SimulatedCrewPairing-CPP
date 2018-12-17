@@ -378,7 +378,7 @@ bool existNotUsed(vector<int> useds){
 	return false;
 }
 
-void Nature::makePopulation(int numGeneration, int numIndividuals){
+Population Nature::makePopulation(int numGeneration, int numIndividuals){
 	Population new_gen = Population();
 	vector<Individual>* individues = new vector<Individual>;
 
@@ -425,7 +425,7 @@ void Nature::makePopulation(int numGeneration, int numIndividuals){
 	cout<<"----------------------------"<<endl;
 	new_gen.generation = *individues;
 	operators.getFitness(&new_gen,agency.getFlights().size());
-	population.push_back(new_gen);
+	return new_gen;
 };
 
 void Nature::showGeneration(int number_gen){
@@ -435,17 +435,22 @@ void Nature::showGeneration(int number_gen){
 	 cout<<"o---------------------------------------------------------------------o"<<endl;
 	 cout<<"o---------------------------------------------------------------------o"<<endl;
 
-	 for(int z = 0; z < population.at(number_gen).generation.size();z++){
-		  cout<<"<~~~~~~~~~~~~~~~~~~~~~~~~individual number "<<to_string(z)<<" ~~~~~~~~~~~~~~~~~~~~~~~~~>"<<endl;
-		  for(int x = 0; x < population.at(number_gen).generation.at(z).getChromosomes().size();x++){
-			   cout<<population.at(number_gen).generation.at(z).getChromosomes().at(x)<<endl;
-		  }
-		  cout<<" - - > TIME_FLY: in hours  :  "<<population.at(number_gen).generation.at(z).getTime()<<endl;
-		  cout<<" - - > PRICE: in dolars $ "<<population.at(number_gen).generation.at(z).getPrice()<<endl;
-		  cout<<" - - > SIZE: in hours      "<<population.at(number_gen).generation.at(z).getSize()<<endl;
-	 }
-	 cout<<" - - > Price Pairing: $  "<<     population.at(number_gen).price<<endl;
-	 cout<<" - - > fitness value :  "<<population.at(number_gen).fitness<<endl;
+	vector<Population> allSolutions =  population.at(number_gen);
+	for( int j = 0; j < allSolutions.size(); j++){ //por cada solucion de la generacion
+		cout<<"solution -> "<<j<<" in generation"<<number_gen<<endl;
+		Population one_solution = allSolutions.at(j);
+		for(int z = 0; z < one_solution.generation.size();z++){
+			cout <<"Duty -> "<<z<<" <------> ";
+			for(int x = 0; x < one_solution.generation.at(z).getChromosomes().size();x++){
+				cout<<one_solution.generation.at(z).getChromosomes().at(x)<<"-";
+			}
+			cout<<"  --- {price -> "<<one_solution.generation.at(z).getPrice() <<"}"<<endl;
+			cout<<endl;
+		}
+		cout<<"Caracteristics of pairing -----------------------------o"<<endl;
+		cout<<" - - > Price Pairing: $  "<<     one_solution.price<<endl;
+		cout<<" - - > fitness value :  "<<		one_solution.fitness<<endl;
+	}
 };
 
 void Nature::showResume(){
@@ -456,14 +461,18 @@ void Nature::showResume(){
 	 cout<<"o---------------------------------------------------------------------o"<<endl;
 
 	for(int i = 0; i < population.size(); i++){
-		for(int z = 0; z < population.at(i).generation.size();z++){
-			for(int x = 0; x < population.at(i).generation.at(z).getChromosomes().size();x++){
-				cout<<population.at(i).generation.at(z).getChromosomes().at(x)<<" ";
+		vector<Population> tmpPopulation =  population.at(i);
+		for( int j = 0; j < tmpPopulation.size(); j++){
+			Population one_solution = tmpPopulation.at(j);
+			for(int z = 0; z < one_solution.generation.size();z++){
+				for(int x = 0; x < one_solution.generation.at(z).getChromosomes().size();x++){
+					cout<<one_solution.generation.at(z).getChromosomes().at(x)<<" ";
+				}
+				cout<<"||";
 			}
-			cout<<"||";
+			cout<<"price -> "<<tmpPopulation.at(j).price<< "fitness -> "<<tmpPopulation.at(j).fitness<<endl;
+			cout<<endl;
 		}
-		cout<<"price -> "<<population.at(i).price<< "fitness -> "<<population.at(i).fitness<<endl;
-		cout<<endl;
 	}
 } 
 

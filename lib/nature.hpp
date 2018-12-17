@@ -10,7 +10,7 @@ using namespace std;
 class Nature{
 public:
      Agency agency;
-     vector<Population> population;
+     vector<vector<Population>> population;
      //vector<vector<Individual>> population; // vectors of vectors to generations.
      Operators operators;
 
@@ -25,7 +25,7 @@ public:
      * param1: version of generation
      * param2: numbers of population
      */
-     void makePopulation(int , int=23);
+     Population makePopulation(int , int=23);
      /*
      * Function to create a individual by greedy
      * param: to know number of iterations; idea of generate a solution with

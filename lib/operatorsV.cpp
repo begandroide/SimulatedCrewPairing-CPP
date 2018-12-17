@@ -64,3 +64,51 @@ void Operators::getFitness(Population* all_generation, int num_flights){
 	all_generation->fitness = fitness;
 	all_generation->price = price_gen;
 };
+
+vector<Population> Operators::selectRouletteWheel(vector<Population> solutions){
+     //obtain total fitness of solutions
+     double totalFitness = 0.0;
+     for(int i =0; i < solutions.size(); i++){
+          totalFitness += solutions.at(i).fitness;
+     }
+     //cout<<"total fitnes -> "<<totalFitness<<endl;
+     vector<double> relativesFitness = vector<double>();
+     for(int i =0; i < solutions.size(); i++){
+          double tmpRLF = solutions.at(i).fitness /totalFitness; 
+          relativesFitness.push_back(tmpRLF);
+     }
+     //seleccionemos la mitad de la poblacion
+     vector<Population> selecteds = vector<Population>();
+     struct timespec ts;
+     for(int i = 0; i < solutions.size()/2;i++){
+		clock_gettime(CLOCK_MONOTONIC, &ts);
+		srand((time_t) ts.tv_nsec);
+          double probability = ((double) rand() / (RAND_MAX));
+          //cout<<"probability -> "<<probability<<endl;
+          double suma = 0.0;
+          for(int j = 0; j < solutions.size();j++){
+               suma += relativesFitness.at(j);
+               //cout<<"suma: "<<suma<<endl;
+               if(probability<suma){
+                    //cout<<"suma excedio -> "<<suma<<endl;
+                    //este debemos seleccinar
+                    selecteds.push_back( solutions.at(j) );
+                    break;
+               }
+          }
+     }
+
+/*     for(int i = 0; i < selecteds.size() ; i++){
+          cout<<selecteds.at(i).fitness<<endl;
+          vector<Individual> individuos = selecteds.at(i).generation;
+          for(int j = 0; j< individuos.size(); j++){
+               vector<int> cromosomas = individuos.at(j).getChromosomes();
+               for (int k = 0; k <  cromosomas.size(); k++){
+                    cout<<cromosomas.at(k)<<"--"; 
+               }
+               cout<<endl;
+          }
+     }
+*/
+     return selecteds;
+}

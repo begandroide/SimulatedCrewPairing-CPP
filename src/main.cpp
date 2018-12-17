@@ -55,6 +55,9 @@ int main(int argc, char const *argv[]) {
           new_generation.push_back(bestSolution);
           //first select
           vector<Population> victimsToTransform = nature.operators.selectRouletteWheel(prev_generation);
+          for(int j = 0 ; j < 1; j++){
+               nature.operators.mutate(victimsToTransform.at(j),nature.agency.getFlights(), 0.07);
+          }
           //TODO second mutate
           //TODO third repare
           //TODO exit condition if prev solution its fine

@@ -3,13 +3,11 @@
 #include "individual.hpp"
 #include "flight.hpp"
 #include "population.hpp"
-
-
 using namespace std;
 
 class Operators{
 public:
-     Individual mutate(Individual, vector<Flight>,double);
+     Individual mutate(Population, vector<Flight>,double);
      vector<Population> selectRouletteWheel(vector<Population>);
      void getFitness(Population*,int);
      int repare(Individual* , int , vector<Flight>);

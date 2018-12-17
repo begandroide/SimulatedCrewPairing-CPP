@@ -422,6 +422,7 @@ void Nature::makePopulation(int numGeneration, int numIndividuals){
 		printf("%d ",usados.at(i));
 	}
 	cout<<endl;
+	cout<<"----------------------------"<<endl;
 	new_gen.generation = *individues;
 	operators.getFitness(&new_gen,agency.getFlights().size());
 	population.push_back(new_gen);
@@ -461,7 +462,7 @@ void Nature::showResume(){
 			}
 			cout<<"||";
 		}
-		cout<<"price -> "<<population.at(i).price<<endl;
+		cout<<"price -> "<<population.at(i).price<< "fitness -> "<<population.at(i).fitness<<endl;
 		cout<<endl;
 	}
 } 

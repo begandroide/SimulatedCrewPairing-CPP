@@ -4,10 +4,10 @@ SRC=src
 CFLAGS=-g
 LIB=lib
 
-all: individual.o flight.o agency.o natureV.o operators.o population.o main.o fly
+all: individual.o flight.o agency.o natureV.o operatorsV.o population.o main.o fly
 
 fly:
-	g++ -O3 $(CFLAGS) -o $(OUT)/fly $(OUT)/individual.o $(OUT)/flight.o $(OUT)/agency.o  $(OUT)/natureV.o $(OUT)/operators.o $(OUT)/main.o 
+	g++ -O3 $(CFLAGS) -o $(OUT)/fly $(OUT)/individual.o $(OUT)/flight.o $(OUT)/agency.o  $(OUT)/natureV.o $(OUT)/operatorsV.o $(OUT)/main.o 
 
 main.o:
 	g++ -O3 $(CFLAGS) -c $(SRC)/main.cpp -o $(OUT)/main.o
@@ -24,8 +24,8 @@ agency.o:
 natureV.o:
 	g++ -O3 $(CFLAGS) -c $(LIB)/natureV.cpp -o $(OUT)/natureV.o
 
-operators.o:
-	g++ -O3 $(CFLAGS) -c $(LIB)/operators.cpp -o $(OUT)/operators.o
+operatorsV.o:
+	g++ -O3 $(CFLAGS) -c $(LIB)/operatorsV.cpp -o $(OUT)/operatorsV.o
 
 population.o:
 	g++ -O3 $(CFLAGS) -c $(LIB)/population.hpp -o $(OUT)/population.o

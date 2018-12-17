@@ -35,16 +35,17 @@ int main(int argc, char const *argv[]) {
           exit(0);
      }
      int count = 0;
-     while(count < 4){
+     while(count < 20){
           nature.makePopulation(count, 20); //0 is generation number zero, 30 experimental resutl by data
           count++;
      }
-
      /*nature.showGeneration(0); //show generation number 0
      nature.showGeneration(1);
      nature.showGeneration(2);
      nature.showGeneration(3);*/
      nature.showResume();
+     Population bestSolution = nature.operators.elitism(nature.population);
+     cout<<bestSolution.fitness<<endl;
      exit(100);
      struct timespec ts;
 

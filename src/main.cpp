@@ -19,6 +19,8 @@ static Nature nature;
 void test();
 long number_individuals;
 
+
+
 int main(int argc, char const *argv[]) {
      //procedure to load flights into vector flights
      if (*++argv != NULL) {
@@ -56,7 +58,18 @@ int main(int argc, char const *argv[]) {
           //first select
           vector<Population> victimsToTransform = nature.operators.selectRouletteWheel(prev_generation);
           for(int j = 0 ; j < 1; j++){
-               nature.operators.mutate(victimsToTransform.at(j),nature.agency.getFlights(), 0.07);
+               Population populationlMutated = nature.operators.mutate(victimsToTransform.at(j),nature.agency.getFlights(), 0.07);
+               for(int i = 0; i < populationlMutated.generation.size(); i++){
+                    for(int a = 0; a < populationlMutated.generation.at(i).getChromosomes().size();a++){
+                         cout<< populationlMutated.generation.at(i).getChromosomes().at(a)<<"--";
+                    }
+                    cout<<" || ";
+               }
+               cout<<endl;               
+               nature.compressGeneration (&populationlMutated.generation);
+               nature.operators.getFitness(&populationlMutated,nature.agency.getFlights().size());
+               cout<<populationlMutated.fitness<<endl;
+               cout<<populationlMutated.price<<endl;
           }
           //TODO second mutate
           //TODO third repare

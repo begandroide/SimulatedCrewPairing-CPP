@@ -7,7 +7,7 @@ using namespace std;
 
 class Operators{
 public:
-     Individual mutate(Population, vector<Flight>,double);
+     Population mutate(Population, vector<Flight>,double);
      vector<Population> selectRouletteWheel(vector<Population>);
      void getFitness(Population*,int);
      int repare(Individual* , int , vector<Flight>);

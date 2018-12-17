@@ -161,7 +161,7 @@ vector<Population> Operators::selectRouletteWheel(vector<Population> solutions){
      */
 }
 
-Individual Operators::mutate(Population individual, vector<Flight> flights,double prob_mutation){
+Population Operators::mutate(Population individual, vector<Flight> flights,double prob_mutation){
 	cout<<"mutate with prob -> "<<prob_mutation*100<<endl;
 	//prefieres explorar o explotar---- depende para la probabilidad
 	int num_flights = flights.size();
@@ -173,18 +173,18 @@ Individual Operators::mutate(Population individual, vector<Flight> flights,doubl
 randem:;
 	clock_gettime(CLOCK_MONOTONIC, &ts);
 	srand((time_t)ts.tv_nsec);
-	int val_rand =  rand()%(numDuties);
-	while(val_rand>=individual.generation.size() ) goto randem;
-	printf ("Random 2 fast seeded: %d\n", val_rand);
+	int val_rand_HP =  rand()%(numDuties);
+	while(val_rand_HP>=individual.generation.size() ) goto randem;
+	printf ("Random 2 fast seeded: %d\n", val_rand_HP);
      //val_rand has the position of duty to mutate.      
-     Individual dutyObjective =  individual.generation.at(val_rand);
+     Individual dutyObjective =  individual.generation.at(val_rand_HP);
      if(dutyObjective.getChromosomes().size() == 1){
 		goto randem;
 	}
 randemize:;
 	clock_gettime(CLOCK_MONOTONIC, &ts);
 	srand((time_t)ts.tv_nsec);
-	val_rand =  rand()%(dutyObjective.getChromosomes().size());
+	int val_rand =  rand()%(dutyObjective.getChromosomes().size());
 	while(val_rand>=dutyObjective.getChromosomes().size() ) goto randemize;
 	printf ("Random 2 fast seeded: %d\n", val_rand);
      //cout<<dutyObjective.getChromosomes().at(val_rand)<<endl;
@@ -264,7 +264,8 @@ randemize:;
                                              cout<<mutatedIndividual->getChromosomes().at(i)<<" - ";
                                         }
                                         cout<<endl;
-                                        return *mutatedIndividual;
+                                        individual.generation.at(val_rand_HP) = *mutatedIndividual;
+                                        return individual;
                                    }else{
                                         //cout<<"desechado"<<endl;
                                         goto cnt;
@@ -320,7 +321,8 @@ randemize:;
                                              cout<<mutatedIndividual->getChromosomes().at(i)<<" - ";
                                         }
                                         cout<<endl;
-                                        return *mutatedIndividual;
+                                        individual.generation.at(val_rand_HP) = *mutatedIndividual;
+                                        return individual;
                                    }else{
                                         //cout<<"desechado"<<endl;
                                         goto cnt_skip;
@@ -382,7 +384,8 @@ randemize:;
                                         cout<<mutatedIndividual->getChromosomes().at(i)<<" - ";
                                    }
                                    cout<<endl;
-                                   return *mutatedIndividual;
+                                   individual.generation.at(val_rand_HP) = *mutatedIndividual;
+                                   return individual;
                               }else{
                                    //cout<<"desechado"<<endl;
                                    goto cnt_skip2;

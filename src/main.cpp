@@ -57,8 +57,14 @@ int main(int argc, char const *argv[]) {
           new_generation.push_back(bestSolution);
           //first select
           vector<Population> victimsToTransform = nature.operators.selectRouletteWheel(prev_generation);
-          for(int j = 0 ; j < 1; j++){
+          for(int j = 0 ; j < victimsToTransform.size(); j++){
                Population populationlMutated = nature.operators.mutate(victimsToTransform.at(j),nature.agency.getFlights(), 0.07);
+               
+               //TODO {DONE} REPARE: go to pairing and search for duties more tiny, check if exist flight leg that can be changed for crash (choques)
+               nature.repareSolution(&populationlMutated);
+               //TODO DELETE {DONE} DUTIES COPIEDS
+               nature.deleteDuplicate(&populationlMutated);
+               nature.compressGeneration (&populationlMutated.generation);
                for(int i = 0; i < populationlMutated.generation.size(); i++){
                     for(int a = 0; a < populationlMutated.generation.at(i).getChromosomes().size();a++){
                          cout<< populationlMutated.generation.at(i).getChromosomes().at(a)<<"--";
@@ -66,7 +72,6 @@ int main(int argc, char const *argv[]) {
                     cout<<" || ";
                }
                cout<<endl;               
-               nature.compressGeneration (&populationlMutated.generation);
                nature.operators.getFitness(&populationlMutated,nature.agency.getFlights().size());
                cout<<populationlMutated.fitness<<endl;
                cout<<populationlMutated.price<<endl;
@@ -75,7 +80,6 @@ int main(int argc, char const *argv[]) {
           //TODO third repare
           //TODO exit condition if prev solution its fine
           //TODO else elitism
-          //Population bestSolution = nature.operators.elitism(new_generation);     
      }
      exit(100);
 }

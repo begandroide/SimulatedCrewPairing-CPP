@@ -1,0 +1,68 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/agency.hpp
+vector
+-
+string
+-
+flight.hpp
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/flight.hpp
+
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/flight.hpp
+string
+-
+
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/individual.hpp
+vector
+-
+
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/nature.hpp
+vector
+-
+agency.hpp
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/agency.hpp
+individual.hpp
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/individual.hpp
+operators.hpp
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/operators.hpp
+population.hpp
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/population.hpp
+
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/natureV.cpp
+nature.hpp
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/nature.hpp
+operators.hpp
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/operators.hpp
+utils.cpp
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/utils.cpp
+iostream
+-
+string.h
+-
+
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/operators.hpp
+individual.hpp
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/individual.hpp
+flight.hpp
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/flight.hpp
+population.hpp
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/population.hpp
+
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/population.hpp
+vector
+-
+individual.hpp
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/individual.hpp
+
+/home/bgautier/Documentos/2018-2/Inteligencia Artificial/Proyecto/Informe2/Programa/clion/lib/utils.cpp
+iostream
+-
+string.h
+-
+

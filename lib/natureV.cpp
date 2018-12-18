@@ -55,6 +55,7 @@ bool exist_in_generation(vector<Individual> pre_individuals, vector<int> chromos
                     }
                 }
                 if(exist == true){
+				 cout<<exist<<endl;
                     return true;
                 }
             }
@@ -338,8 +339,6 @@ void Nature::repare(vector<int> *usados, vector<Individual> *individuals) {
 				cout <<chromosomes.at(k) << "-";
 			}
 			cout<<endl;*/
-		}else{
-			cout<<"preparacion2"<<endl;
 		}
 
 		//calcular precio del cromosoma creado. ya esta validado idletime
@@ -476,128 +475,75 @@ void Nature::showResume(){
 	}
 } 
 
+void Nature::repareSolution(Population* pairing){
+	vector<int> useds = vector<int>();
+	for(int i = 0; i < agency.getFlights().size();i++){
+		useds.push_back(0);
+	}
 
-vector<Individual> Nature::getGreedyIndividual(int id_flight_start,vector<int>* usados,int repare=0){
-	vector<Individual> output = vector<Individual>();
-	Flight new_flight = agency.getFlights().at(id_flight_start-1);
-	vector<int> cpy_used = *usados;
-	if(check_base(new_flight.aeropuerto_init) == 0) {
-		string airport_llegada = new_flight.aeropuerto_fin;
-
-		vector<int> new_chromosomes = vector<int>();
-		new_chromosomes.push_back(id_flight_start);
-
-		double size = 0.0;
-		double price = 0.0;
-		double time = 0.0;
-
-		//buscar un proximo vuelo para hacer duties
-		if(usados->at(id_flight_start-1) > 6){ //vuelo usado cmo max 2 veces
-			new_chromosomes.clear();
-			return {};
-		}else{
-			usados->at(id_flight_start-1) += 1;
+	for(int i = 0; i < pairing->generation.size(); i++){
+		for(int a = 0; a < pairing->generation.at(i).getChromosomes().size();a++){
+			cout<< pairing->generation.at(i).getChromosomes().at(a)<<"--";
+			useds.at(pairing->generation.at(i).getChromosomes().at(a) -1) +=1;
 		}
+		cout<<" || ";
+	}
+	cout<<endl;
 
-		size = new_flight.timeFlight;
-		time = new_flight.timeFlight;
-		price = new_flight.timeFlight;
-
-		// look for next available from arrived airport
-		// take order to time and rules.
-		//  we suposed 15 chromosomes max in duty
-		for(int a = 0; a < 4; a++) { //for each chromosome setted to 7 given a max duty time of 12 hours
-			bool found = false;
-			for (int i = 0; i < agency.getFlights().size(); i++) {
-				if (airport_llegada.compare(agency.getFlights().at(i).aeropuerto_init) == 0) {
-					// prove if the currect fligth its used for current duty
-					//cout<< agency.getFlights().at(i).id<<endl;
-					bool used = exists(*usados, i); //if exist
-
-					bool valid = validFlight(new_chromosomes, i);   //if take order to rules of time
-
-					//si no fue usado lo usamos
-
-					if (used != true && valid) {
-						found = true;
-						cout << "base" << endl;
-						usados->at(agency.getFlights().at(i).id - 1) += 1;
-						cpy_used.at(agency.getFlights().at(i).id - 1) += 1;
-						new_chromosomes.push_back(agency.getFlights().at(i).id);
-
-						string hora_prev, hora_now;
-						hora_prev = agency.getFlights().at(new_chromosomes.at(new_chromosomes.size() - 2) - 1).horaFin;
-						hora_now = agency.getFlights().at(
-								new_chromosomes.at(new_chromosomes.size() - 1) - 1).horaInicio;
-
-						double tmp = getIdleTime(hora_prev, hora_now);
-
-						size += tmp +
-								agency.getFlights().at(new_chromosomes.at(new_chromosomes.size() - 1) - 1).timeFlight;
-						time += agency.getFlights().at(new_chromosomes.at(new_chromosomes.size() - 1) - 1).timeFlight;
-						price += 0.75 * tmp +
-								 agency.getFlights().at(new_chromosomes.at(new_chromosomes.size() - 1) - 1).timeFlight;
-
-						if (check_base(agency.getFlights().at(i).aeropuerto_fin) == 0) goto help;
-
-						//cout<<"chromosme added"<<endl;
-						airport_llegada.clear();
-						airport_llegada = agency.getFlights().at(i).aeropuerto_fin;
-						break;
-					}
-				}
-			}
-			if(repare==1){
-				if(found == false){
-					return {};
-				}
-			}
+	for(int i = 0; i < agency.getFlights().size();i++){
+		cout<<useds.at(i)<<" ";
+	}
+	cout<<endl;	
+	repare(&useds, &pairing->generation);
+	useds.clear();
+	for(int i = 0; i < agency.getFlights().size();i++){
+		useds.push_back(0);
+	}
+	for(int i = 0; i < pairing->generation.size(); i++){
+		for(int a = 0; a < pairing->generation.at(i).getChromosomes().size();a++){
+			cout<< pairing->generation.at(i).getChromosomes().at(a)<<"--";
+			useds.at(pairing->generation.at(i).getChromosomes().at(a) -1) +=1;
 		}
-		help:;
-		if(size > MAX_TIME_DUTY){
-			while(size>MAX_TIME_DUTY){
-				size -= getIdleTime(agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-2)-1).horaFin,agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).horaInicio);
-				size -= agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).timeFlight;
-				time -= agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).timeFlight;
-				price -= 0.75*getIdleTime(agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-2)-1).horaFin,agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).horaInicio) +
-						 agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).timeFlight;
-				usados->at(new_chromosomes.at(new_chromosomes.size()-1)-1)--;
-				new_chromosomes.pop_back();
-			}
-		}
+		cout<<" || ";
+	}
+	cout<<endl;
 
-		int flag2 = 0;
-		if( agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).aeropuerto_fin.compare(BASE1)==0 || agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).aeropuerto_fin.compare(BASE2)==0 ){
-			flag2=1;
-		}
-		if(flag2==0){
-			while(agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).aeropuerto_fin.compare(BASE1)==0 || agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).aeropuerto_fin.compare(BASE2)==0 ){
-				//nos quedamos en z
-				size -= getIdleTime(agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-2)-1).horaFin,agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).horaInicio);
-				size -= agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).timeFlight;time -= agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).timeFlight;
-				price -= 0.75*getIdleTime(agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-2)-1).horaFin,agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).horaInicio) +
-						 agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).timeFlight;
-				usados->at(new_chromosomes.at(new_chromosomes.size()-1)-1)--;
-				new_chromosomes.pop_back();
-			}
-		}
+	for(int i = 0; i < agency.getFlights().size();i++){
+		cout<<useds.at(i)<<" ";
+	}
+}
 
-		if(check_base( agency.getFlights().at(new_chromosomes.at(new_chromosomes.size()-1)-1).aeropuerto_fin) != 0){
-			return {};
-		}
-
-		output.push_back(Individual(size, time,price,0,new_chromosomes));
-		if(repare == 3){
-			vector<Individual> indTmp2 = getGreedyIndividual(id_flight_start,&cpy_used,1);
-			if(indTmp2.empty() == false){
-				for(int i = 0; i < indTmp2.size();i++){
-					output.push_back(indTmp2.at(i));
-				}
-			}
-			cout<<"analisis"<<endl;
-		}
-		return output;
+bool compareCromosomes(vector<int> cromosomasOne, vector<int> cromosomasTwo){
+	if(cromosomasOne.size() != cromosomasTwo.size()){
+		return false;
 	}else{
-		return {};
+		for(int i = 0; i < cromosomasOne.size(); i++){
+			if(cromosomasOne.at(i) != cromosomasTwo.at(i)){
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+void Nature::deleteDuplicate(Population* pairing){
+	vector<Individual> individues = pairing->generation;
+	vector<int> position_delete = vector<int>();
+	for(int i = 0; i < individues.size(); i++){ //por cada individuo o duty
+		vector<int> cromosomasPivote =  individues.at(i).getChromosomes();
+		for(int j = 0; j < individues.size();j++){
+			if(i!=j){
+				if(compareCromosomes(cromosomasPivote, individues.at(j).getChromosomes())){
+					//delete one of two
+					position_delete.push_back(j);
+				}				
+			}
+		}
+	}
+	for(int i = 0; i < position_delete.size(); i++){
+		if(i > 0){
+			pairing->generation.erase( pairing->generation.begin() +  position_delete.at(i) - 1);	
+		}
+		pairing->generation.erase( pairing->generation.begin() +  position_delete.at(i));
 	}
 }

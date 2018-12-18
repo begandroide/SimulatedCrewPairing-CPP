@@ -98,17 +98,21 @@ void Operators::getFitness(Population* all_generation, int num_flights){
 	}
 
 	int count_repited = 0;
-	for(int i = 0 ; i < num_flights; i++){
+	int count_empty = 0;
+     for(int i = 0 ; i < num_flights; i++){
 	//	cout<<taked_count.at(i)<<endl;
-		if(taked_count.at(i)>1){
+		if(taked_count.at(i)>=1){
 			count_repited += 1; 
 		}
+          if(taked.at(i) == 0 ){
+               count_empty +=1;
+          }
 	}
 	//cout<<"repited -> "<<count_repited<<endl;
 
 	double fitness = 0.0;
-	fitness = price_gen + (count_repited)*100;
-	//cout<<"fitness val -> "<<1/fitness<<endl;
+     fitness = price_gen + (count_repited)*20.0 + (count_empty)*100.0;
+     //cout<<"fitness val -> "<<1/fitness<<endl;
 	all_generation->fitness = fitness;
 	all_generation->price = price_gen;
 };
@@ -162,7 +166,10 @@ vector<Population> Operators::selectRouletteWheel(vector<Population> solutions){
 }
 
 Population Operators::mutate(Population individual, vector<Flight> flights,double prob_mutation){
-	cout<<"mutate with prob -> "<<prob_mutation*100<<endl;
+
+     int long countTotal = 0;
+
+	//cout<<"mutate with prob -> "<<prob_mutation*100<<endl;
 	//prefieres explorar o explotar---- depende para la probabilidad
 	int num_flights = flights.size();
 
@@ -175,7 +182,7 @@ randem:;
 	srand((time_t)ts.tv_nsec);
 	int val_rand_HP =  rand()%(numDuties);
 	while(val_rand_HP>=individual.generation.size() ) goto randem;
-	printf ("Random 2 fast seeded: %d\n", val_rand_HP);
+	//printf ("Random 2 fast seeded: %d\n", val_rand_HP);
      //val_rand has the position of duty to mutate.      
      Individual dutyObjective =  individual.generation.at(val_rand_HP);
      if(dutyObjective.getChromosomes().size() == 1){
@@ -186,15 +193,16 @@ randemize:;
 	srand((time_t)ts.tv_nsec);
 	int val_rand =  rand()%(dutyObjective.getChromosomes().size());
 	while(val_rand>=dutyObjective.getChromosomes().size() ) goto randemize;
-	printf ("Random 2 fast seeded: %d\n", val_rand);
+	//printf ("Random 2 fast seeded: %d\n", val_rand);
      //cout<<dutyObjective.getChromosomes().at(val_rand)<<endl;
+     countTotal++;
 
-     cout<<"nos llego"<<endl;
+     /*cout<<"nos llego"<<endl;
      for(int i = 0; i < dutyObjective.getChromosomes().size();i++){
           cout<<dutyObjective.getChromosomes().at(i)<<" - ";
      }
      cout<<endl;
-
+     */
      Individual* mutatedIndividual = (Individual*)malloc(sizeof(Individual));
      mutatedIndividual = (Individual*) memcpy(mutatedIndividual,&dutyObjective,sizeof(Individual));
 	
@@ -257,13 +265,13 @@ randemize:;
                                         mutatedIndividual->setPrice( tmpPrice );
                                         mutatedIndividual->setTime( tmpTime );
                                         mutatedIndividual->setSize( tmpSize );
-                                        cout<<"MUTED------------------"<<endl;
+                                        /*cout<<"MUTED------------------"<<endl;
 
                                         cout<<"Lo dejamos"<<endl;
                                         for(int i = 0; i < mutatedIndividual->getChromosomes().size();i++){
                                              cout<<mutatedIndividual->getChromosomes().at(i)<<" - ";
                                         }
-                                        cout<<endl;
+                                        cout<<endl;*/
                                         individual.generation.at(val_rand_HP) = *mutatedIndividual;
                                         return individual;
                                    }else{
@@ -314,13 +322,13 @@ randemize:;
                                         mutatedIndividual->setPrice( tmpPrice );
                                         mutatedIndividual->setTime( tmpTime );
                                         mutatedIndividual->setSize( tmpSize );
-                                        cout<<"MUTED------------------"<<endl;
+                                        /*cout<<"MUTED------------------"<<endl;
 
                                         cout<<"Lo dejamos"<<endl;
                                         for(int i = 0; i < mutatedIndividual->getChromosomes().size();i++){
                                              cout<<mutatedIndividual->getChromosomes().at(i)<<" - ";
                                         }
-                                        cout<<endl;
+                                        cout<<endl;*/
                                         individual.generation.at(val_rand_HP) = *mutatedIndividual;
                                         return individual;
                                    }else{
@@ -377,13 +385,13 @@ randemize:;
                                    mutatedIndividual->setPrice( tmpPrice );
                                    mutatedIndividual->setTime( tmpTime );
                                    mutatedIndividual->setSize( tmpSize );
-                                   cout<<"MUTED------------------"<<endl;
+                                  /* cout<<"MUTED------------------"<<endl;
 
                                    cout<<"Lo dejamos"<<endl;
                                    for(int i = 0; i < mutatedIndividual->getChromosomes().size();i++){
                                         cout<<mutatedIndividual->getChromosomes().at(i)<<" - ";
                                    }
-                                   cout<<endl;
+                                   cout<<endl;*/
                                    individual.generation.at(val_rand_HP) = *mutatedIndividual;
                                    return individual;
                               }else{
@@ -396,5 +404,9 @@ randemize:;
                cnt_skip2:;
           }
      }
-     goto randem;
+     if(countTotal<5000){
+          goto randem;
+     }else{
+          return {};
+     }
 };

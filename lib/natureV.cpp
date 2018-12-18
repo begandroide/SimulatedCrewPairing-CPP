@@ -472,6 +472,7 @@ void Nature::showResume(){
 			cout<<"price -> "<<tmpPopulation.at(j).price<< "fitness -> "<<tmpPopulation.at(j).fitness<<endl;
 			cout<<endl;
 		}
+		cout<<"-------------------------------------------------------------------------------------"<<endl;
 	}
 } 
 
@@ -483,18 +484,13 @@ void Nature::repareSolution(Population* pairing){
 
 	for(int i = 0; i < pairing->generation.size(); i++){
 		for(int a = 0; a < pairing->generation.at(i).getChromosomes().size();a++){
-			cout<< pairing->generation.at(i).getChromosomes().at(a)<<"--";
+//			cout<< pairing->generation.at(i).getChromosomes().at(a)<<"--";
 			useds.at(pairing->generation.at(i).getChromosomes().at(a) -1) +=1;
 		}
-		cout<<" || ";
 	}
-	cout<<endl;
-
-	for(int i = 0; i < agency.getFlights().size();i++){
-		cout<<useds.at(i)<<" ";
-	}
-	cout<<endl;	
+	
 	repare(&useds, &pairing->generation);
+	/*
 	useds.clear();
 	for(int i = 0; i < agency.getFlights().size();i++){
 		useds.push_back(0);
@@ -510,7 +506,7 @@ void Nature::repareSolution(Population* pairing){
 
 	for(int i = 0; i < agency.getFlights().size();i++){
 		cout<<useds.at(i)<<" ";
-	}
+	}*/
 }
 
 bool compareCromosomes(vector<int> cromosomasOne, vector<int> cromosomasTwo){
@@ -536,14 +532,14 @@ void Nature::deleteDuplicate(Population* pairing){
 				if(compareCromosomes(cromosomasPivote, individues.at(j).getChromosomes())){
 					//delete one of two
 					position_delete.push_back(j);
+					break;
 				}				
 			}
 		}
 	}
-	for(int i = 0; i < position_delete.size(); i++){
-		if(i > 0){
-			pairing->generation.erase( pairing->generation.begin() +  position_delete.at(i) - 1);	
-		}
-		pairing->generation.erase( pairing->generation.begin() +  position_delete.at(i));
+	//cout<<position_delete.size()<<endl;
+
+	if(position_delete.size() > 0){
+		pairing->generation.erase( pairing->generation.begin() +  position_delete.at(0) );	
 	}
 }

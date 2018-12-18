@@ -36,6 +36,8 @@ public:
      vector<Individual> getGreedyIndividual(vector<Individual>,int id_flight_start,vector<int>* usados,int);
      void compressGeneration(vector<Individual>*);
      void repare(vector<int>* usados, vector<Individual>*);
+     void repareSolution(Population*);
+     void deleteDuplicate(Population*);
      
      /*
      * Function depends of hours of flights, hours of no flights (idle time),

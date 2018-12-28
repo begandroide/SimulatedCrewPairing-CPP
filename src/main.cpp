@@ -4,11 +4,11 @@
 #include <string>
 using namespace std;
 
-#include "../lib/individual.hpp"
-#include "../lib/flight.hpp"
-#include "../lib/agency.hpp"
-#include "../lib/nature.hpp"
-#include "../lib/operators.hpp"
+#include "../headers/individual.hpp"
+#include "../headers/flight.hpp"
+#include "../headers/agency.hpp"
+#include "../headers/nature.hpp"
+#include "../headers/operators.hpp"
 
 const string BASE1 = "IST";
 const string BASE2 = "ANK";

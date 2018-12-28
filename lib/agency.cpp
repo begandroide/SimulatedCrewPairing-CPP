@@ -2,8 +2,8 @@
 #include<iostream>
 #include<sstream>
 #include <vector>
-#include "flight.hpp"
-#include "agency.hpp"
+#include "../headers/flight.hpp"
+#include "../headers/agency.hpp"
 #include <algorithm>
 using namespace std;
 

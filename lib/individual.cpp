@@ -1,6 +1,6 @@
 #include <vector>
 #include <stdio.h>
-#include "individual.hpp"
+#include "../headers/individual.hpp"
 using namespace std;
 
 Individual::Individual(double _size)

@@ -26,6 +26,7 @@ int main(int argc, char const *argv[]) {
                number_generations = strtol(*argv, (char **) argv, 10);
                cout << "number of individuals per generation: " + to_string(number_generations) << endl;
           } else {
+               number_generations = 10;
                printf("Number of  generations not given, set default: 10\n");
           }
      } else {
@@ -45,7 +46,8 @@ int main(int argc, char const *argv[]) {
 
      double minFitness = 9999;
      Population bestALL; 
-     for(int iterations = 0; iterations < 1000 ; iterations++){ //por cada generacion que desee iterar
+     cout<<"Iteraciones: "<<number_generations<<endl;
+     for(int iterations = 0; iterations < number_generations ; iterations++){ //por cada generacion que desee iterar
           vector<Population> prev_generation = nature.population.at(iterations);
           
           //first select
@@ -88,6 +90,7 @@ int main(int argc, char const *argv[]) {
           nature.population.push_back(prev_generation);
      }
      //nature.showResume();
+     cout<<"¡Solucion usa todos los vuelos!"<<endl;
      cout<<"Minimum price $" <<bestALL.price<<endl;
      cout<<"Duties:"<<endl;
      for(int a = 0; a < bestALL.generation.size(); a++){

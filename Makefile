@@ -28,7 +28,7 @@ operatorsV.o:
 	g++ -O3 $(CFLAGS) -c $(LIB)/operatorsV.cpp -o $(OUT)/operatorsV.o
 
 population.o:
-	g++ -O3 $(CFLAGS) -c $(LIB)/population.hpp -o $(OUT)/population.o
+	g++ -O3 $(CFLAGS) -c headers/population.hpp -o $(OUT)/population.o
 
 
 clean:

@@ -1,5 +1,5 @@
-#include "nature.hpp"
-#include "operators.hpp"
+#include "../headers/nature.hpp"
+#include "../headers/operators.hpp"
 #include "utils.cpp"
 #include<iostream>
 #include <string.h>

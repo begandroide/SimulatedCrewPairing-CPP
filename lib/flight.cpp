@@ -1,4 +1,4 @@
-#include "flight.hpp"
+#include "../headers/flight.hpp"
 using namespace std;
 
 Flight::Flight(int _id,double _timeFlight,string _aeropuerto_init,string _aeropuerto_fin,string _horaInicio,string _horaFin){

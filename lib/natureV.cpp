@@ -7,6 +7,9 @@
 using namespace std;
 
 
+/*
+* Check if its used position in vector usados
+*/
 bool Nature::exists(vector<int> usados, int position){
 	 bool used = false;
 	 if(usados.at(position) > 0){
@@ -16,7 +19,9 @@ bool Nature::exists(vector<int> usados, int position){
 	 }
 }
 
-
+/*
+* Check if its position its valid flight in the last
+*/
 bool Nature::validFlight(vector<int> chromosomes, int position){
 	 int id = chromosomes.at( chromosomes.size() - 1);
 	 Flight last = agency.getFlights().at(id-1);
@@ -28,6 +33,10 @@ bool Nature::validFlight(vector<int> chromosomes, int position){
 	 }
 }
 
+
+/*
+* Check if its a duty exist in pairing
+*/
 bool exist_in_generation(vector<Individual> pre_individuals, vector<int> chromosomes){
 	for(int i = 0; i < pre_individuals.size() ; i++){
 		if(pre_individuals.at(i).getChromosomes().at(0) == chromosomes.at(0)){
@@ -64,8 +73,10 @@ bool exist_in_generation(vector<Individual> pre_individuals, vector<int> chromos
 	return false;
 }
 
-//main function of librarie Nature
 
+/*
+* get a duty from flight random base.
+*/
 vector<Individual> Nature::getGreedyIndividual(vector<Individual> prev_individuals,int id_flight_start,vector<int>* usados,int repare=0){
 	vector<Individual> output = vector<Individual>();
 	Flight new_flight = agency.getFlights().at(id_flight_start-1);
@@ -103,12 +114,9 @@ vector<Individual> Nature::getGreedyIndividual(vector<Individual> prev_individua
 				if (airport_llegada.compare(agency.getFlights().at(i).aeropuerto_init) == 0) 
 				{
 					// prove if the currect fligth its used for current duty
-					//cout<< agency.getFlights().at(i).id<<endl;
 					bool used = exists(*usados, i); //if exist
-
 					bool valid = validFlight(new_chromosomes, i);   //if take order to rules of time
 					//si no fue usado lo usamos
-
 					if (used != true && valid) 
 					{
 						vector<int> tmp2 = new_chromosomes;
@@ -120,9 +128,7 @@ vector<Individual> Nature::getGreedyIndividual(vector<Individual> prev_individua
 							usados->at(agency.getFlights().at(i).id - 1) += 1;
 							cpy_used.at(agency.getFlights().at(i).id - 1) += 1;
 							new_chromosomes.push_back(agency.getFlights().at(i).id);
-							
 							string hora_prev, hora_now;
-							
 							hora_prev = agency.getFlights().at(new_chromosomes.at(new_chromosomes.size() - 2) - 1).horaFin;
 							hora_now = agency.getFlights().at(new_chromosomes.at(new_chromosomes.size() - 1) - 1).horaInicio;
 							//update Costs 
@@ -131,9 +137,7 @@ vector<Individual> Nature::getGreedyIndividual(vector<Individual> prev_individua
 							size += tmpIdle + tmpTime;
 							time += tmpTime;
 							price += 0.75 * tmpIdle + tmpTime;
-
-							//if (check_base(agency.getFlights().at(i).aeropuerto_fin) == 0) goto help;
-
+							//if (check_base(agency.getFlights().at(i).aeropuerto_fin) == 0) goto help; 
 							airport_llegada.clear();
 							airport_llegada = agency.getFlights().at(i).aeropuerto_fin;
 							break;
@@ -193,6 +197,9 @@ vector<Individual> Nature::getGreedyIndividual(vector<Individual> prev_individua
 
 
 
+/*
+* fucntion to update used vector from pairing individues
+*/
 void updateUsed(vector<int>* used, vector<Individual> individues){
 	int num_flights = used->size();
 	used->clear();
@@ -205,6 +212,9 @@ void updateUsed(vector<int>* used, vector<Individual> individues){
 	}
 }
 
+/*
+* Compress duties, if two are joinables then join
+*/
 void Nature::compressGeneration(vector<Individual>* generation) {
 	//por cada conjunto de vuelos ( por cada individuo ) buscar otro conjunto de vuelo que los conecte repetando las reglas
 	vector<Individual> new_generation = vector<Individual>();
@@ -242,8 +252,6 @@ void Nature::compressGeneration(vector<Individual>* generation) {
 						if (sizeTmp + size > MAX_TIME_DUTY || timeTmp + time > MAX_TIME_FLIGHT) {
 							break;
 						} else {
-							//unir
-							//cout << "unir" << endl;
 							vector<int> newChromosome = vector<int>();
 							for (int i = 0; i < pivoteChromosomes.size(); i++) {
 								newChromosome.push_back(pivoteChromosomes.at(i));
@@ -273,13 +281,15 @@ void Nature::compressGeneration(vector<Individual>* generation) {
 	*generation = new_generation;
 }
 
+
+/*
+* repare a pairing, to take flights not taken before
+*/
 void Nature::repare(vector<int> *usados, vector<Individual> *individuals) {
 	vector<int> ids_flights_notUseds = vector<int>();
 	for(int i = 0; i < usados->size(); i++) if(usados->at(i) == 0) ids_flights_notUseds.push_back(i+1);
-	//cout<<ids_flights_notUseds.size()<<endl;
 	for(int i = 0; i < ids_flights_notUseds.size();i++)
 	{
-		//cout<<ids_flights_notUseds.at(i)<<endl;
 		Flight objectiveFlight = agency.getFlights().at(ids_flights_notUseds.at(i)-1);
 		string airport_inicio = objectiveFlight.aeropuerto_init;
 		string airport_fin = objectiveFlight.aeropuerto_fin;
@@ -297,7 +307,6 @@ void Nature::repare(vector<int> *usados, vector<Individual> *individuals) {
 				if(agency.getFlights().at(j).aeropuerto_init.compare(airport_fin) == 0){
 					if(check_base(agency.getFlights().at(j).aeropuerto_fin) == 0){
 						//es una base podemos finalizar el duty.
-
 						bool valid =  validFlight(chromosomes,j);
 						if(valid){
 							chromosomes.push_back( agency.getFlights().at(j).id );
@@ -306,20 +315,14 @@ void Nature::repare(vector<int> *usados, vector<Individual> *individuals) {
 						}
 					}
 				}
-			}/*
-			for(int k = 0; k < chromosomes.size(); k++ ){
-				cout <<chromosomes.at(k) << " ";
-			}*/
-			//cout<<endl;
+			}
 		}else if(check_base(airport_fin) == 0){
-			//cout<<"preparacion"<<endl;
 			usados->at( ids_flights_notUseds.at(i) -1) += 1;
 			for(int j = 0; j < agency.getFlights().size(); j++){
 				//un vuelo que comienze en airport_fin
 				if(agency.getFlights().at(j).aeropuerto_fin.compare(airport_inicio) == 0){
 					if(check_base(agency.getFlights().at(j).aeropuerto_init) == 0){
 						//es una base podemos finalizar el duty.
-						//solo si respeta reglas
 						int lastChrom = chromosomes.at(chromosomes.size()-1);
 						chromosomes.pop_back();
 						chromosomes.push_back(j+1);
@@ -335,10 +338,6 @@ void Nature::repare(vector<int> *usados, vector<Individual> *individuals) {
 				}
 			}
 			std::reverse(chromosomes.begin(),chromosomes.end());
-			/*for(int k = 0; k < chromosomes.size(); k++ ){
-				cout <<chromosomes.at(k) << "-";
-			}
-			cout<<endl;*/
 		}
 
 		//calcular precio del cromosoma creado. ya esta validado idletime
@@ -346,7 +345,6 @@ void Nature::repare(vector<int> *usados, vector<Individual> *individuals) {
 		double size = 0.0;
 		double price = 0.0;
 		for(int k = 0; k < chromosomes.size(); k++ ){
-//			cout <<chromosomes.at(k) << " ";
 			Flight tmpFlight = agency.getFlights().at(chromosomes.at(k)-1);
 			time += tmpFlight.timeFlight;
 			price += tmpFlight.timeFlight;
@@ -355,21 +353,17 @@ void Nature::repare(vector<int> *usados, vector<Individual> *individuals) {
 				string hourPrev = agency.getFlights().at(chromosomes.at(k-1) -1).horaFin;
 				string hourRecent = tmpFlight.horaInicio;
 				double tmpIdle = getIdleTime(hourPrev,hourRecent);
-				//cout<<tmpIdle<<endl;
 				price += 0.75*tmpIdle;
 				size += tmpIdle;
 			}
 		}
-//		cout<<endl;
 		if(!exist_in_generation(*individuals,chromosomes))  individuals->push_back( Individual(size, time,price,0,chromosomes));
-		/*cout<<"size ->"<<size<<endl;
-		cout<<"price ->"<<price<<endl;
-		cout<<"time ->"<<time<<endl;
-*/
 	}
-	//exit(299); 
 }
 
+/*
+* Check if exists flights no usados
+*/
 bool existNotUsed(vector<int> useds){
 	for(int i = 0; i < useds.size(); i++){
 		if(useds.at(i) == 0) return true;
@@ -377,6 +371,10 @@ bool existNotUsed(vector<int> useds){
 	return false;
 }
 
+
+/*
+* function to make a one initial solution
+*/
 Population Nature::makePopulation(int numGeneration, int numIndividuals){
 	Population new_gen = Population();
 	vector<Individual>* individues = new vector<Individual>;
@@ -394,7 +392,6 @@ Population Nature::makePopulation(int numGeneration, int numIndividuals){
 		srand((time_t) ts.tv_nsec);
 		int probability = ( std::rand() % (  agency.getFlights().size() + 1  ));
 		if(probability == 0 || probability > agency.getFlights().size()) goto anta;
-		//cout<<probability<<endl;
 		vector<Individual> indi = getGreedyIndividual(*individues,probability,&usados,0);
 		if(indi.size() != 0){
 			for(int j = 0; j < indi.size();j++){
@@ -409,24 +406,19 @@ Population Nature::makePopulation(int numGeneration, int numIndividuals){
 		flag = existNotUsed(usados);
 	}
 
-	for(int i = 0; i  < usados.size();i++){
-		printf("%d ",usados.at(i));
-	}
-	cout<<endl;
 	compressGeneration(individues);
 	updateUsed(&usados,*individues);
-	//TODO repair solution, must have all flights although has repited fligths
+	//repair solution, must have all flights although has repited fligths
 	repare(&usados,individues);
-	for(int i = 0; i  < usados.size();i++){
-		printf("%d ",usados.at(i));
-	}
-	cout<<endl;
-	cout<<"----------------------------"<<endl;
 	new_gen.generation = *individues;
 	operators.getFitness(&new_gen,agency.getFlights().size());
 	return new_gen;
 };
 
+
+/*
+* show generation at number_gen
+*/
 void Nature::showGeneration(int number_gen){
 	 cout<<"o---------------------------------------------------------------------o"<<endl;
 	 cout<<"o---------------------------------------------------------------------o"<<endl;
@@ -452,6 +444,9 @@ void Nature::showGeneration(int number_gen){
 	}
 };
 
+/*
+* show resume of all generations and pairings
+*/
 void Nature::showResume(){
 	 cout<<"o---------------------------------------------------------------------o"<<endl;
 	 cout<<"o---------------------------------------------------------------------o"<<endl;
@@ -476,6 +471,9 @@ void Nature::showResume(){
 	}
 } 
 
+/*
+* repare a pairing
+*/
 void Nature::repareSolution(Population* pairing){
 	vector<int> useds = vector<int>();
 	for(int i = 0; i < agency.getFlights().size();i++){
@@ -484,31 +482,16 @@ void Nature::repareSolution(Population* pairing){
 
 	for(int i = 0; i < pairing->generation.size(); i++){
 		for(int a = 0; a < pairing->generation.at(i).getChromosomes().size();a++){
-//			cout<< pairing->generation.at(i).getChromosomes().at(a)<<"--";
 			useds.at(pairing->generation.at(i).getChromosomes().at(a) -1) +=1;
 		}
-	}
-	
+	}	
 	repare(&useds, &pairing->generation);
-	/*
-	useds.clear();
-	for(int i = 0; i < agency.getFlights().size();i++){
-		useds.push_back(0);
-	}
-	for(int i = 0; i < pairing->generation.size(); i++){
-		for(int a = 0; a < pairing->generation.at(i).getChromosomes().size();a++){
-			cout<< pairing->generation.at(i).getChromosomes().at(a)<<"--";
-			useds.at(pairing->generation.at(i).getChromosomes().at(a) -1) +=1;
-		}
-		cout<<" || ";
-	}
-	cout<<endl;
-
-	for(int i = 0; i < agency.getFlights().size();i++){
-		cout<<useds.at(i)<<" ";
-	}*/
 }
 
+
+/*
+* Check if two duties are equals
+*/
 bool compareCromosomes(vector<int> cromosomasOne, vector<int> cromosomasTwo){
 	if(cromosomasOne.size() != cromosomasTwo.size()){
 		return false;
@@ -522,6 +505,10 @@ bool compareCromosomes(vector<int> cromosomasOne, vector<int> cromosomasTwo){
 	return true;
 }
 
+
+/*
+* function delete duplicates in pairing
+*/
 void Nature::deleteDuplicate(Population* pairing){
 	vector<Individual> individues = pairing->generation;
 	vector<int> position_delete = vector<int>();
@@ -537,8 +524,6 @@ void Nature::deleteDuplicate(Population* pairing){
 			}
 		}
 	}
-	//cout<<position_delete.size()<<endl;
-
 	if(position_delete.size() > 0){
 		pairing->generation.erase( pairing->generation.begin() +  position_delete.at(0) );	
 	}
